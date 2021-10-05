@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  padding: 2rem;
+  padding: 20px;
   margin: 0;
   height: 100%;
 }
@@ -13,25 +13,25 @@ body {
   width: 100%;
 }
 
-#loginBox{
-  background-color: lightblue;
-  padding: 0;
-  width: 20%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  height: 50%;
-  justify-content: space-evenly;
+.App {
+  height: 100%;
+  width: 100%;
 }
 
-.inputBox{
-  margin: 0 auto !important;
+.menu {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: darkblue;
+  text-decoration: none;
+  color: white;
 }
 
-#inputBoxes {
-  width: 90%;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+.menu a {
+  text-decoration: none;
+  color: white;
+}
+.menu a:hover {
+  text-decoration: underline;
 }
