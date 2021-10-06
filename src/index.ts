@@ -12,11 +12,14 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = (): void => {
 
 
-  /*session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    callback({responseHeaders: Object.assign({
-        'Content-Security-Policy': ["default-src 'self'", "connect-src *"]
-      }, details.responseHeaders)});
-  });*/
+  session.defaultSession.webRequest.onHeadersReceived(((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': ['connect-src * ws: http: https: \'self\'']
+      }
+    });
+  }));
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 1000,
