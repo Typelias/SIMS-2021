@@ -94,7 +94,7 @@ const WebRTCMain = () => {
 
     useEffect(() => {
         socketRef.current = new SignalR.HubConnectionBuilder()
-            .withUrl("http://192.168.1.113:5000/signalrtc")
+            .withUrl("http://typelias.se:5000/signalrtc")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
         navigator.mediaDevices.getUserMedia({video: videoConstraints, audio: true}).then(async (stream) => {
