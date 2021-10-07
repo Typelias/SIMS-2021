@@ -142,6 +142,11 @@ const WebRTCMain = (props: any) => {
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
+            {peers.map((peer, index) => {
+                return (
+                    <Video key={index} peer={peer}></Video>
+                )
+            })}
         </Container>
     );
 
