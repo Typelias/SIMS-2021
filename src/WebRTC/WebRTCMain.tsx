@@ -112,7 +112,6 @@ const WebRTCMain = (props: any) => {
                     peers.push(peer);
                 });
                 setPeers(peers);
-                reducePears();
 
             });
 
@@ -125,7 +124,6 @@ const WebRTCMain = (props: any) => {
                     peer,
                 });
                 setPeers(users => [...users, peer]);
-                reducePears();
             });
 
             socketRef.current.on("GetId", (id: string) => {
@@ -156,9 +154,9 @@ const WebRTCMain = (props: any) => {
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
-            {peers.map((peer, index) => {
+            {peersRef.current.map((peer, index) => {
                 return (
-                    <Video key={index} peer={peer}></Video>
+                    <Video key={index} peer={peer.peer}></Video>
                 )
             })}
         </Container>
