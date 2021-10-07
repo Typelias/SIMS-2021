@@ -93,7 +93,7 @@ const WebRTCMain = () => {
 
     useEffect(() => {
         socketRef.current = new SignalR.HubConnectionBuilder()
-            .withUrl("http://192.168.1.113:5000/signalrtc")
+            .withUrl("http://typelias.se:5000/signalrtc")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
         navigator.mediaDevices.getUserMedia({video: videoConstraints, audio: true}).then(async (stream) => {
@@ -141,15 +141,31 @@ const WebRTCMain = () => {
         });
     }, []);
 
+    function temp(): JSX.Element[] {
+        console.log(peers.length);
+
+        const usedID: Array<string> = [];
+
+        const videos = peersRef.current.map((peer, index) => {
+            if(usedID.indexOf(peer.peerID) > -1) {
+                return ;
+            } else {
+                usedID.push(peer.peerID);
+            }
+            return (
+                <Video key={index} peer={peer.peer} />
+            );
+        });
+
+        return videos;
+
+    }
+
 
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
-            {peers.map((peer, index) => {
-                return (
-                    <Video key={index} peer={peer} />
-                );
-            })}
+            {temp()}
         </Container>
     );
 
