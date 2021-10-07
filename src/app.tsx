@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactApp from './Home/ReactApp';
+import PlaceChoice from './Home/PlaceChoice';
 import { HashRouter, Link, Route, Switch } from "react-router-dom"
 import WebRTCMain from './WebRTC/WebRTCMain';
 import WhiteBoard from './Whiteboard/WhiteboardMain';
@@ -18,6 +19,7 @@ function render() {
 
                 <Switch>
                     <Route exact path="/" component={ReactApp} />
+                    <Route exact path="/PlaceChoice" component={PlaceChoice}/>
                     <Route exact path="/WebRTC" component={WebRTCMain} />
                     <Route exact path="/Whiteboard" component={WhiteBoard} />
                 </Switch>

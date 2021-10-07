@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, Redirect, useHistory } from "react-router-dom"
 import TextField from '@mui/material/TextField';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { Card, CardContent, CardActions, Typography } from "@mui/material";
@@ -7,10 +8,15 @@ import { purple } from '@mui/material/colors';
 import Button, { ButtonProps } from '@mui/material/Button';
 
 
+
 export default function SignInHook() {
 
+    
+    const history = useHistory();
+    
     const [username, setUsername] = useState("");
     const [roomid, setRoomid] = useState("");
+    
     
     function validateEntry() {
       return username.length > 0 && roomid.length > 0;
@@ -19,6 +25,7 @@ export default function SignInHook() {
     function handleClick() {
         console.log("current Username is: " + username)
         console.log("current RoomId is: " + roomid)
+        history.push("/PlaceChoice");
       }
 
 
@@ -54,9 +61,12 @@ export default function SignInHook() {
                 </TextField>
         </CardContent>
         <CardActions>
+
             <PurpleButton variant="contained" type="submit" color="success" disabled={!validateEntry()} onClick={handleClick}>CONTINUE<DoubleArrowIcon/></PurpleButton>
         </CardActions>
     </Card>
    )
+   
 }
+
 
