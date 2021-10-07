@@ -9,7 +9,7 @@ import Button, { ButtonProps } from '@mui/material/Button';
 
 
 
-export default function SignInHook() {
+function SignInHook() {
 
     
     const history = useHistory();
@@ -25,7 +25,7 @@ export default function SignInHook() {
     function handleClick() {
         console.log("current Username is: " + username)
         console.log("current RoomId is: " + roomid)
-        history.push("/PlaceChoice");
+        history.push("/PlaceChoice")
       }
 
 
@@ -69,4 +69,5 @@ export default function SignInHook() {
    
 }
 
+export default SignInHook
 
