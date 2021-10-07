@@ -51,7 +51,7 @@ const WebRTCMain = (props: any) => {
     const [peers, setPeers] = useState<Peer.Instance[]>([]);
     const socketRef = useRef<SignalR.HubConnection>();
     const userVideo = useRef<HTMLVideoElement>();
-    const peersRef = useRef<IPeerRef[]>([]);
+    const peersRef = useRef<Map<string, Peer.Instance>>(new Map<string, Peer.Instance>());
     const RoomID = "Tjuvholmen";
     const clientIDRef = useRef<string>();
 
@@ -105,10 +105,11 @@ const WebRTCMain = (props: any) => {
                 userList = userList.filter(id => id != socketRef.current.connectionId);
                 userList.forEach(userID => {
                     const peer = createPeer(userID, socketRef.current.connectionId, stream);
-                    peersRef.current.push({
+                    /*peersRef.current.push({
                         peerID: userID,
                         peer
-                    });
+                    });*/
+                    peersRef.current.set(userID, peer);
                     peers.push(peer);
                 });
                 setPeers(peers);
@@ -119,10 +120,11 @@ const WebRTCMain = (props: any) => {
                 const payLoad: Payload = JSON.parse(payload);
                 const sig: Peer.SignalData = JSON.parse(payLoad.signal);
                 const peer = addPeer(sig, payLoad.callerID, stream);
-                peersRef.current.push({
+                /*peersRef.current.push({
                     peerID: payLoad.callerID,
                     peer,
-                });
+                });*/
+                peersRef.current.set(payLoad.callerID, peer);
                 setPeers(users => [...users, peer]);
             });
 
@@ -131,9 +133,10 @@ const WebRTCMain = (props: any) => {
             });
 
             socketRef.current.on("ReceivingReturnedSignal", (payload: Payload) => {
-                const item = peersRef.current.find(p => p.peerID === payload.userToSignal);
+                //const item = peersRef.current.find(p => p.peerID === payload.userToSignal);
+                const item = peersRef.current.get(payload.userToSignal);
                 const sig: Peer.SignalData = JSON.parse(payload.signal);
-                item.peer.signal(sig);
+                item.signal(sig);
             });
             await socketRef.current.start();
             socketRef.current.invoke("JoinRoom", RoomID);
@@ -141,24 +144,23 @@ const WebRTCMain = (props: any) => {
     }, []);
 
 
-    function reducePears(): void {
+    /*function reducePears(): void {
         let localPeers = peers;
         localPeers = Array.from(new Set(localPeers));
         setPeers(localPeers);
         let localPeerRef = peersRef.current;
         localPeerRef = Array.from(new Set(localPeerRef));
         peersRef.current = localPeerRef;
-    }
+    }*/
 
 
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
-            {peersRef.current.map((peer, index) => {
-                return (
-                    <Video key={index} peer={peer.peer}></Video>
-                )
+            {Array.from(peersRef.current.values()).map((p, index) => {
+              <Video peer={p} key={index}></Video>
             })}
+
         </Container>
     );
 
