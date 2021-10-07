@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import Peer from "simple-peer";
 import styled from "styled-components";
 import * as SignalR from "@microsoft/signalr";
-import unique from "fork-ts-checker-webpack-plugin/lib/utils/array/unique";
+import {useHistory} from "react-router-dom";
+
 
 const Container = styled.div`
   padding: 20px;
@@ -54,7 +55,7 @@ const WebRTCMain = () => {
     const peersRef = useRef<IPeerRef[]>([]);
     const RoomID = "Tjuvholmen";
     const clientIDRef = useRef<string>();
-
+    const history = useHistory();
     function createPeer(userToSignal: string, callerID: string, stream: MediaStream): Peer.Instance {
         const peer = new Peer({
             initiator: true,
@@ -93,7 +94,7 @@ const WebRTCMain = () => {
 
     useEffect(() => {
         socketRef.current = new SignalR.HubConnectionBuilder()
-            .withUrl("http://typelias.se:5000/signalrtc")
+            .withUrl("http://192.168.1.113:5000/signalrtc")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
         navigator.mediaDevices.getUserMedia({video: videoConstraints, audio: true}).then(async (stream) => {
@@ -103,6 +104,7 @@ const WebRTCMain = () => {
                 const peers: Peer.Instance[] = [];
                 let userList: string[] = JSON.parse(users)
                 userList = userList.filter(id => id != socketRef.current.connectionId);
+                console.log(userList);
                 userList.forEach(userID => {
                     const peer = createPeer(userID, socketRef.current.connectionId, stream);
                     peersRef.current.push({
@@ -138,6 +140,7 @@ const WebRTCMain = () => {
             });
             await socketRef.current.start();
             socketRef.current.invoke("JoinRoom", RoomID);
+
         });
     }, []);
 
@@ -161,12 +164,22 @@ const WebRTCMain = () => {
 
     }
 
+    async function handleClick() {
+        await socketRef.current.stop();
+
+        history.push("/");
+    }
+
 
     return (
+        <div>
+            <button onClick={handleClick}>Leave Room</button>
         <Container>
+
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
             {temp()}
         </Container>
+        </div>
     );
 
 };
