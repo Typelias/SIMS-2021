@@ -92,7 +92,7 @@ const WebRTCMain = (props: any) => {
 
     useEffect(() => {
         socketRef.current = new SignalR.HubConnectionBuilder()
-            .withUrl("https://localhost:44396/signalrtc")
+            .withUrl("http://192.168.1.113:5000/signalrtc")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
         navigator.mediaDevices.getUserMedia({video: videoConstraints, audio: true}).then(async (stream) => {
@@ -100,14 +100,15 @@ const WebRTCMain = (props: any) => {
 
             socketRef.current.on("AllUsers", (users: string) => {
                 const peers: Peer.Instance[] = [];
-                const userList: string[] = JSON.parse(users)
+                let userList: string[] = JSON.parse(users)
+                userList = userList.filter(id => id != socketRef.current.connectionId);
                 userList.forEach(userID => {
                     const peer = createPeer(userID, socketRef.current.connectionId, stream);
                     peersRef.current.push({
                         peerID: userID,
                         peer
                     });
-                    peer.push(peer);
+                    peers.push(peer);
                 });
                 setPeers(peers);
             });
