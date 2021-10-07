@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Peer from "simple-peer";
 import styled from "styled-components";
 import * as SignalR from "@microsoft/signalr";
+import unique from "fork-ts-checker-webpack-plugin/lib/utils/array/unique";
 
 const Container = styled.div`
   padding: 20px;
@@ -111,6 +112,7 @@ const WebRTCMain = (props: any) => {
                     peers.push(peer);
                 });
                 setPeers(peers);
+
             });
 
             socketRef.current.on("UserJoined", (payload: string) => {
@@ -139,10 +141,21 @@ const WebRTCMain = (props: any) => {
     }, []);
 
 
+    function reducePears(): void {
+        let localPeers = peers;
+        localPeers = Array.from(new Set(localPeers));
+        setPeers(localPeers);
+        let localPeerRef = peersRef.current;
+        localPeerRef = Array.from(new Set(localPeerRef));
+        peersRef.current = localPeerRef;
+    }
+
+
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
             {peers.map((peer, index) => {
+                reducePears();
                 return (
                     <Video key={index} peer={peer}></Video>
                 )
