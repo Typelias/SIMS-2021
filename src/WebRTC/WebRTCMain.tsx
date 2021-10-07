@@ -47,7 +47,7 @@ interface Payload {
     signal: string,
 }
 
-const WebRTCMain = (props: any) => {
+const WebRTCMain = () => {
     const [peers, setPeers] = useState<Peer.Instance[]>([]);
     const socketRef = useRef<SignalR.HubConnection>();
     const userVideo = useRef<HTMLVideoElement>();
@@ -109,8 +109,12 @@ const WebRTCMain = (props: any) => {
                         peerID: userID,
                         peer
                     });*/
-                    peersRef.current.set(userID, peer);
-                    peers.push(peer);
+                    if(userID != socketRef.current.connectionId) {
+                        peersRef.current.set(userID, peer);
+                        console.log(peersRef.current);
+                        peers.push(peer);
+                    }
+
                 });
                 setPeers(peers);
 
@@ -124,8 +128,11 @@ const WebRTCMain = (props: any) => {
                     peerID: payLoad.callerID,
                     peer,
                 });*/
-                peersRef.current.set(payLoad.callerID, peer);
-                setPeers(users => [...users, peer]);
+                if(payLoad.callerID != socketRef.current.connectionId){
+                    peersRef.current.set(payLoad.callerID, peer);
+                    setPeers(users => [...users, peer]);
+                }
+
             });
 
             socketRef.current.on("GetId", (id: string) => {
