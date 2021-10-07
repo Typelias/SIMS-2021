@@ -110,9 +110,7 @@ const WebRTCMain = () => {
                         peer
                     });
 
-                        peers.push(peer);
-
-
+                    peers.push(peer);
                 });
                 setPeers(peers);
 
@@ -126,10 +124,7 @@ const WebRTCMain = () => {
                     peerID: payLoad.callerID,
                     peer,
                 });
-
                 setPeers(users => [...users, peer]);
-
-
             });
 
             socketRef.current.on("GetId", (id: string) => {
@@ -138,7 +133,6 @@ const WebRTCMain = () => {
 
             socketRef.current.on("ReceivingReturnedSignal", (payload: Payload) => {
                 const item = peersRef.current.find(p => p.peerID === payload.userToSignal);
-                //const item = peersRef.current.get(payload.userToSignal);
                 const sig: Peer.SignalData = JSON.parse(payload.signal);
                 item.peer.signal(sig);
             });
@@ -148,23 +142,14 @@ const WebRTCMain = () => {
     }, []);
 
 
-    /*function reducePears(): void {
-        let localPeers = peers;
-        localPeers = Array.from(new Set(localPeers));
-        setPeers(localPeers);
-        let localPeerRef = peersRef.current;
-        localPeerRef = Array.from(new Set(localPeerRef));
-        peersRef.current = localPeerRef;
-    }*/
-
-
     return (
         <Container>
             <StyledVideo muted ref={userVideo} autoPlay playsInline/>
             {peers.map((peer, index) => {
-                <Video peer={peer} key={index}/>
+                return (
+                    <Video key={index} peer={peer} />
+                );
             })}
-
         </Container>
     );
 
