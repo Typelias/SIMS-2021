@@ -9,7 +9,7 @@ import GavelRoundedIcon from '@mui/icons-material/GavelRounded';
 
 
 function OfficeHook(){
-    
+
     const TestPaper = styled(Paper)(({theme}) => ({
         ...theme.typography.body2,
         textAlign: 'center',
@@ -25,12 +25,12 @@ function OfficeHook(){
         },
     }));
 
+    //lås för leader tas bort om det är för jobbigt att implementera!
     const [loading, setLoading] = React.useState(false);
-
+    const [leader, setLeader] = React.useState(0);
     function leaderRole(){
-        console.log("leader")
         setLoading(true);
-        console.log(loading)
+        setLeader(1)
     }
 
     return(
@@ -41,7 +41,8 @@ function OfficeHook(){
               height: 150,
             }, }}>
                 <CenterRipple disabled={loading}>
-                    <TestPaper elevation={5} onClick={leaderRole} ><GavelRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>Leader</Typography></TestPaper>
+                    <TestPaper elevation={5} onClick={leaderRole}><GavelRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>Leader</Typography><br/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>{leader}/1</Typography></TestPaper>
+                    
                 </CenterRipple>   
                 <CenterRipple> 
                     <TestPaper elevation={5}><PeopleRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>Participant</Typography></TestPaper>

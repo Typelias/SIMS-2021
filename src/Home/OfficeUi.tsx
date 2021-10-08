@@ -3,14 +3,14 @@ import OfficeHook from './OfficeHook';
 
 
 
-class OfficeChoice extends React.Component  {
+class OfficeUi extends React.Component  {
 
     render(){
         return(
-            <OfficeHook/>
+            <div><h1>This is office!</h1></div>
         );
     }
 
 }
 
-export default OfficeChoice;
+export default OfficeUi;

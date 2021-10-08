@@ -30,7 +30,7 @@ function hookTest() {
     function goToOffice(){
 
         console.log("office!")
-        history.push("/OfficeChoice")
+        history.push("/OfficeUi")
     }
     function goToHome(){
 
