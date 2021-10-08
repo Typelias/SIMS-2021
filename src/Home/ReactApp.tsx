@@ -9,8 +9,7 @@ class ReactApp extends React.Component {
 
 
     render() {
-        
-        //console.log("Hello");
+
         return (
             <SignInHook/>
             

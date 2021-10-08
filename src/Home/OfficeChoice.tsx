@@ -1,11 +1,13 @@
 import React from 'react';
+import OfficeHook from './OfficeHook';
+
 
 
 class OfficeChoice extends React.Component  {
 
     render(){
         return(
-            <div><h1>This is office!</h1></div>
+            <OfficeHook/>
         );
     }
 

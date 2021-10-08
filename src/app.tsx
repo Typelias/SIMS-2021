@@ -4,6 +4,9 @@ import ReactApp from './Home/ReactApp';
 import PlaceChoice from './Home/PlaceChoice';
 import { HashRouter, Link, Route, Switch } from "react-router-dom"
 import WebRTCMain from './WebRTC/WebRTCMain';
+import OfficeChoice from './Home/OfficeChoice';
+import HomeUi from './Home/HomeUi';
+import HomeOfficeHook from './Home/HomeOfficeHook';
 import WhiteBoard from './Whiteboard/WhiteboardMain';
 
 
@@ -20,6 +23,9 @@ function render() {
                 <Switch>
                     <Route exact path="/" component={ReactApp} />
                     <Route exact path="/PlaceChoice" component={PlaceChoice}/>
+                    <Route exact path="/OfficeChoice" component={OfficeChoice}/>
+                    <Route exact path="/HomeOfficeHook" component={HomeOfficeHook}/>
+                    <Route exact path="/HomeUi" component={HomeUi}/>
                     <Route exact path="/WebRTC" component={WebRTCMain} />
                     <Route exact path="/Whiteboard" component={WhiteBoard} />
                 </Switch>

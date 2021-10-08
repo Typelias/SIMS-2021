@@ -10,9 +10,9 @@ import Button, { ButtonProps } from '@mui/material/Button';
 
 
 function SignInHook() {
-
+    let history = useHistory();
     
-    const history = useHistory();
+    
     
     const [username, setUsername] = useState("");
     const [roomid, setRoomid] = useState("");
