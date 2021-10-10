@@ -19,8 +19,11 @@ function hookTest() {
         lineHeight: '60px',
         height: '100%',
         width: '100%',
+        cursor: 'pointer',
+        transition: 'transform ease 300ms',
         '&:hover': {
-          backgroundColor: purple[300],
+            backgroundColor: purple[300],
+            transform: 'translate(0, -10px)',
         },
         '&:active': {
             backgroundColor: purple[800],
