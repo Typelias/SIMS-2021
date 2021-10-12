@@ -5,23 +5,22 @@ const Container = styled.div`
     background-color: ${({ theme }) => theme.secondary};
     position: fixed;
     right: 0;
-    top: 0;
-    bottom: 5rem;
-    width: 16rem;
+    left: 0;
+    bottom: 0;
+    height: 5rem;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
 `
 
-const Sidebar = () => {
+const BottomBar = () => {
 
     return (
         <Container>
 
-            coolSideBar
+            coolBottomBar
            
         </Container>
     )
 }
 
-export default Sidebar
+export default BottomBar

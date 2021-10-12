@@ -10,6 +10,7 @@ import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './UI/Styles/Theme'
 
 function App() {
+
   return (
     <HashRouter>
         <ThemeProvider theme={darkTheme}>

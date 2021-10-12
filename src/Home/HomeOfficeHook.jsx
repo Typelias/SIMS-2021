@@ -11,6 +11,13 @@ function HookTest() {
 
     let history = useHistory()
 
+    function goToOffice(){
+        history.push("/OfficeUi")
+    }
+    function goToHome(){ 
+        history.push("/HomeUi")
+    }
+    
     const PaperStyle = styled(Paper)`
         text-align: center;
         background-color: ${({ theme }) => theme.colorGrey};
@@ -27,24 +34,17 @@ function HookTest() {
             background-color: ${({ theme }) => theme.colorBlack};
         }
     `
+
     const TypographyStyle = styled(Typography)`
         font-size: 24;
         font-weight: bold;
         text-align: center;
         color: black;
+        font-family: "Arial Black", Arial Black;
     `
+
     
-    function goToOffice(){
 
-        console.log("office!")
-        history.push("/OfficeUi")
-    }
-    function goToHome(){
-
-        console.log("Home!")
-          
-        history.push("/HomeUi")
-    }
     return (
         <Box sx={{width: "auto", height: "auto", display: 'flex', alignItems: "center", justifyContent: "center", flexWrap: 'wrap',
             '& > :not(style)': {
