@@ -11,18 +11,19 @@ const StyledVideo = styled.video`
   width: 300px
 `
 
-const Video = ({stream}) => {
-    const ref = useRef();
+const Video = ({ stream }) => {
+  const ref = useRef();
 
-    console.log("YEET");
-    useEffect(( ) => {
-      ref.current.srcObject = stream;
-    }, [])
-    
+  console.log("YEET");
+  useEffect(() => {
+    ref.current.srcObject = stream;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    return (
-        <StyledVideo muted playsInline autoPlay ref={ref}/>
-    );
+
+  return (
+    <StyledVideo playsInline autoPlay ref={ref} />
+  );
 }
 
 function WebRTCMain() {
@@ -57,7 +58,6 @@ function WebRTCMain() {
       myPeer.current.on('call', call => {
         console.log("Called");
         call.answer(stream);
-        const video = document.createElement('video');
         call.on('stream', userVideoStream => {
           console.log("Got stream");
           addVideoStream(userVideoStream);
@@ -65,7 +65,7 @@ function WebRTCMain() {
       });
 
       hub.current.on('UserConnected', userId => {
-        if(userId == myID.current) return;
+        if (userId === myID.current) return;
         connectToNewUser(userId, stream);
       })
       hub.current.on("UserDisconnected", userId => {
@@ -79,8 +79,7 @@ function WebRTCMain() {
 
 
     });
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function addVideoStream(stream) {
@@ -89,17 +88,15 @@ function WebRTCMain() {
 
   function connectToNewUser(userId, stream) {
     const call = myPeer.current.call(userId, stream);
-    const video = document.createElement('video');
-    const vid = React.createElement('video');
     const streamID = stream.id;
 
     call.on('stream', userVideoStream => {
       console.log("Got stream");
       addVideoStream(userVideoStream);
-    }); 
+    });
     call.on('close', () => {
       let vids = videos;
-      vids = videos.filter(vid => vid!=streamID);
+      vids = videos.filter(vid => vid !== streamID);
       setVideos(vids);
     });
 
@@ -112,11 +109,11 @@ function WebRTCMain() {
     const usedID = [];
 
     const vids = videos.map((stream, index) => {
-      if(usedID.indexOf(stream.id) > -1) {
-        return
+      if (usedID.indexOf(stream.id) > -1) {
+        return null;
       }
       usedID.push(stream.id);
-      return <Video stream={stream} key={index}/>
+      return <Video stream={stream} key={index} />
 
     });
 
@@ -133,7 +130,7 @@ function WebRTCMain() {
         removeDupes()
       }
 
-      <UserVid muted autoPlay ref={myVideoStream}/>
+      <UserVid muted autoPlay ref={myVideoStream} />
     </div>
   );
 }
