@@ -3,8 +3,7 @@ import { Link, Redirect, useHistory } from "react-router-dom"
 import TextField from '@mui/material/TextField';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { Card, CardContent, CardActions, Typography } from "@mui/material";
-import { styled } from '@mui/material/styles';
-import { purple } from '@mui/material/colors';
+import styled from 'styled-components'
 import Button, { ButtonProps } from '@mui/material/Button';
 
 
@@ -29,15 +28,18 @@ function SignInHook() {
       }
 
 
-
-    /*const PurpleButton = styled(Button)<ButtonProps>(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
-        margin: "0% 20%",
-        backgroundColor: purple[500],
-        '&:hover': {
-          backgroundColor: purple[700],
-        },
-      }));*/
+   
+    const PurpleButton = styled(Button)`
+        color: ${({ theme }) => theme.textColor};
+        border: none;
+        margin: 0% auto;
+        background-color: ${({ theme }) => theme.headerNumber};
+        padding: 4%;
+        border-radius: 8px;
+        &:hover {
+          background-color: ${({ theme }) => theme.secondary};
+        }
+        `
     
 
     return (
@@ -61,8 +63,8 @@ function SignInHook() {
                 </TextField>
         </CardContent>
         <CardActions>
-
-            <button onClick={handleClick}>HELP</button>
+          <PurpleButton variant="contained" disabled={!validateEntry()} onClick={handleClick} endIcon={<DoubleArrowIcon/>}>CONTINUE</PurpleButton>
+            
         </CardActions>
     </Card>
    )

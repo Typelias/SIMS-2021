@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useHistory } from "react-router-dom"
 import { styled } from '@mui/material/styles';
 import { blue, purple, grey } from '@mui/material/colors';
-import { Box, Card, CardContent, CardActions, Typography, Paper, PaperProps } from "@mui/material";
+import { Box, Typography, Paper} from "@mui/material";
 import CenterRipple from '@mui/material/ButtonBase'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
 import HomeWorkRoundedIcon from '@mui/icons-material/HomeWorkRounded';
