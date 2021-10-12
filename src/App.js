@@ -6,10 +6,13 @@ import OfficeUi from './Home/OfficeUi';
 import HomeUi from './Home/HomeUi';
 import HomeOfficeHook from './Home/HomeOfficeHook';
 import WhiteBoard from './Whiteboard/WhiteBoard';
+import { ThemeProvider } from 'styled-components'
+import { lightTheme, darkTheme } from './UI/Styles/Theme'
 
 function App() {
   return (
     <HashRouter>
+        <ThemeProvider theme={darkTheme}>
             <div className="App">
                 <div className="menu">
                     <Link to="/"><h2>Home</h2></Link>
@@ -27,7 +30,7 @@ function App() {
                     <Route exact path="/Whiteboard" component={WhiteBoard} />
                 </Switch>
             </div>
-
+        </ThemeProvider>
         </HashRouter>
   );
 }
