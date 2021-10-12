@@ -35,6 +35,7 @@ function WebRTCMain() {
   const myVideoStream = useRef();
   const peers = {};
   const myID = useRef();
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(async (stream) => {
@@ -124,23 +125,48 @@ function WebRTCMain() {
 
 
   return (
-    <div className="App">
+    <Container>
+      <VideoGrid>
+        {
+          removeDupes()
+        }
 
-      {
-        removeDupes()
-      }
-
-      <UserVid muted autoPlay ref={myVideoStream} />
-    </div>
+        <UserVid muted autoPlay ref={myVideoStream} />
+      </VideoGrid>
+      <ChatContainer>
+        <h1>CHAT</h1>
+      </ChatContainer>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin:0;
+`
+
+const ChatContainer = styled.div`
+background-color: gray;
+  width: 20vw;
+  height: 80vh;
+`
+
 const UserVid = styled.video`
+
   position: absolute;
   width: 200px;
   height: 200px;
-  bottom: 0;
-  right:0;
+  bottom: 10px;
+  right: 10px;
+`
+
+const VideoGrid = styled.div`
+position: relative;
+  padding: 20px;
+  width:80vw;
+  height:80vh;
+  background-color: black;
 `
 
 export default WebRTCMain;
