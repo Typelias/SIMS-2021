@@ -3,6 +3,9 @@ import Peer from 'peerjs';
 import styled from 'styled-components'
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { Avatar } from '@mui/material';
+import { bgcolor } from '@mui/system';
+import { red } from '@mui/material/colors';
 
 
 
@@ -36,11 +39,13 @@ function WebRTCMain() {
   const peers = {};
   const myID = useRef();
   const [messages, setMessages] = useState([]);
+  const [userList, setUserlist] = useState({});
+  const [message, changeMessage] = useState("");
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(async (stream) => {
       hub.current = new SignalR.HubConnectionBuilder()
-        .withUrl("http://192.168.1.149:5000/signalr")
+        .withUrl("http://192.168.1.113:5000/signalr")
         .configureLogging(SignalR.LogLevel.Information)
         .build();
       await hub.current.start();
@@ -49,7 +54,7 @@ function WebRTCMain() {
 
       myPeer.current = new Peer(myID.current, {
         path: "/",
-        host: "192.168.1.149",
+        host: "192.168.1.113",
         port: 5000
       })
 
@@ -71,14 +76,25 @@ function WebRTCMain() {
       })
       hub.current.on("UserDisconnected", userId => {
         if (peers[userId]) peers[userId].close();
+      });
+
+      hub.current.on("UserList", newUserList => {
+        console.log(newUserList);
+        setUserlist(newUserList);
+      });
+
+      hub.current.on("createMessage", (message, username) => {
+        console.log(message)
+        var newMessage = {
+          username,
+          message
+        };
+        setMessages(mess => [...mess, newMessage])
       })
 
       myPeer.current.on('open', id => {
-        hub.current.invoke("JoinRoom", ROOMID, id);
+        hub.current.invoke("JoinRoom", ROOMID, id, myID.current.slice(0, 5));
       });
-
-
-
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -104,6 +120,8 @@ function WebRTCMain() {
     peers[userId] = call;
   }
 
+  
+
 
   function removeDupes() {
 
@@ -122,6 +140,18 @@ function WebRTCMain() {
 
   }
 
+  function handleChange(event) {
+    changeMessage(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    hub.current.invoke("Message", message);
+    changeMessage("");
+  }
+
+
+
 
 
   return (
@@ -133,12 +163,67 @@ function WebRTCMain() {
 
         <UserVid muted autoPlay ref={myVideoStream} />
       </VideoGrid>
-      <ChatContainer>
-        <h1>CHAT</h1>
-      </ChatContainer>
+      <SideBar>
+        <UserList>
+          <h3>Users In Chat</h3>
+          {
+            Object.keys(userList).map(name => {
+              return <li key={name}> <Avatar sx={{bgcolor: red[200], marginRight: 1}}> {name.slice(0,1)} </Avatar> {name} </li>;
+            })
+          }
+        </UserList>
+        <ChatContainer>
+          <h3>Chat</h3>
+
+          {
+            messages.map(message => {
+            console.log(messages.length)
+              return <li key={uuidv4()}> <Avatar sx={{bgcolor: red[200], marginRight: 1}}> {message.username.slice(0,1)} </Avatar> {message.message} </li>
+            })
+          }
+          <form onSubmit={handleSubmit}>
+            <input type="text" value={message} onChange={handleChange}/>
+            <input type="submit" value="Send Message"/>
+          </form>
+
+        </ChatContainer>
+      </SideBar>
     </Container>
   );
 }
+
+const ChatContainer = styled.div`
+  height: 70vh;
+  width:100%;
+  margin:0;
+  h3 {
+    margin: 0;
+    padding-top: 5px;
+    text-align: center;
+  }
+  li {
+    font-size: 1.5em;
+    display: flex;
+    align-items:center;
+    
+  }
+
+  li:hover {
+    opacity: 0.5;
+    border: 1 solid black;
+
+  }
+
+`
+
+const UserList = styled(ChatContainer)`
+  height: 30vh;
+  background-color: lightgray;
+  list-style: none;
+  overflow-y: scroll;
+  
+
+`
 
 const Container = styled.div`
   display: flex;
@@ -146,10 +231,10 @@ const Container = styled.div`
   margin:0;
 `
 
-const ChatContainer = styled.div`
+const SideBar = styled.div`
 background-color: gray;
   width: 20vw;
-  height: 80vh;
+  height: 100vh;
 `
 
 const UserVid = styled.video`
