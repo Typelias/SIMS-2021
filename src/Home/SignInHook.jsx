@@ -71,7 +71,6 @@ function SignInHook() {
    
 }
 
-//<PurpleButton variant="contained" type="submit" color="success" disabled={!validateEntry()} onClick={handleClick}>CONTINUE<DoubleArrowIcon/></PurpleButton>
 
 export default SignInHook
 

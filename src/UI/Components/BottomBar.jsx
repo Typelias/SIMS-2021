@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import MicRoundedIcon from '@mui/icons-material/MicRounded'; //mic on icon
-import MicOffRoundedIcon from '@mui/icons-material/MicOffRounded';      //mic off icon
+import Microphone from './BottomBarIcons/Microphone'; //mic on icon
 import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff'; //camera off icon
 import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'; //settingsicon
@@ -62,7 +61,7 @@ const BottomBar = () => {
     return (
         <Container>
             <SectionLeft>
-                <MicRoundedIcon  sx={Style}/>
+                <Microphone />
                 <PhotoCameraFrontIcon sx={Style}/>    
             </SectionLeft>
             <SectionMid>
