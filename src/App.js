@@ -16,9 +16,7 @@ function App() {
     <HashRouter>
         <ThemeProvider theme={darkTheme}>
             <div className="App">
-                <div className="menu">
-                    <Link to="/"><HomeIcon fontSize="large"/></Link>
-                </div>
+                
 
                 <Switch>
                     <Route exact path="/" component={ReactApp} />
@@ -38,5 +36,9 @@ function App() {
 export default App;
 
 /** links to other apps
+ * <div className="menu">
+                    <Link to="/"><HomeIcon fontSize="large"/></Link>
+                
  * <Link to="/WebRTC"><h2>WebRTC</h2></Link>
- * <Link to="/Whiteboard"><h2>Whiteboard</h2></Link>*/
+ * <Link to="/Whiteboard"><h2>Whiteboard</h2></Link>
+ * </div>*/

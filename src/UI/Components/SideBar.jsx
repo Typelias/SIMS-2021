@@ -10,7 +10,20 @@ const Container = styled.div`
     width: 16rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: space-between;
+    
+`
+const ParticipantsDiv = styled.div`
+    border-radius: 5px;
+    border: solid;
+    border-color: white;
+    height: 50%;
+`
+const ChatDiv = styled.div`
+    border-radius: 5px;
+    border: solid;
+    border-color: white;
+    height: 50%;
 `
 
 const Sidebar = () => {
@@ -18,7 +31,8 @@ const Sidebar = () => {
     return (
         <Container>
 
-            coolSideBar
+            <ParticipantsDiv> Participants </ParticipantsDiv>
+            <ChatDiv> Chat </ChatDiv>
            
         </Container>
     )

@@ -7,35 +7,43 @@ import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'; //settingsicon
 import ScreenShareRoundedIcon from '@mui/icons-material/ScreenShareRounded'; //screenshare icon
 import GestureIcon from '@mui/icons-material/Gesture'; //whiteboard icon
+import HomeIcon from '@mui/icons-material/Home';
+import { Link } from "react-router-dom"
 
 const Style = {
     fontSize: 40, 
-    margin: "5vh"
-    
+    margin: "5vh",
+    color: "#FFF",
 }
 
 const SectionLeft = styled.div`
     display: inherit;
     flex-shrink: 0;
     align-items: center;
-    position: absolute;
     left: 2vh;
+    width: 40%;
+`
+const SectionMid = styled.div`
+    display: inherit;
+    align-items: center;
+    margin-left: auto;
+    
+
 `
 const SectionRight = styled.div`
     display: inherit;
     flex-shrink: 0;
     align-items: center;
-    position: absolute;
-    right: 25vh;
     
     
 `
-const SectionMid = styled.div`
+
+const SectionEnd = styled.div`
     display: inherit;
-    flex-shrink: 0;
-    position: absolute;
-    margin-right: 5vh;
+    margin-left: auto;
+    width: 20vh;
 `
+
 
 const Container = styled.div`
     background-color: ${({ theme }) => theme.secondary};
@@ -48,14 +56,14 @@ const Container = styled.div`
     gap: 5%;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    
 
     
 `
 
 
 const BottomBar = () => {
-    
+
     return (
         <Container>
             <SectionLeft>
@@ -69,6 +77,9 @@ const BottomBar = () => {
                     <ScreenShareRoundedIcon sx={Style}/>
                     <SettingsRoundedIcon sx={Style}/>  
             </SectionRight>
+            <SectionEnd>
+                <Link to="/"><HomeIcon sx={Style}/></Link>
+            </SectionEnd>
                 
         </Container>
     )

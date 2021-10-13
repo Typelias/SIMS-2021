@@ -7,8 +7,8 @@ const Container = styled.div`
     height: 110%;
     background-image: url(${ Image });
     background-size: 100% 100%;
-    margin-top: -2%;
-    margin-left: -1%;
+    margin-left: -4%;
+    margin-right: -4%;
  `
 
 const CamView = () => {
