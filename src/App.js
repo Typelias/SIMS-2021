@@ -8,6 +8,7 @@ import HomeOfficeHook from './Home/HomeOfficeHook';
 import WhiteBoard from './Whiteboard/WhiteBoard';
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './UI/Styles/Theme'
+import HomeIcon from '@mui/icons-material/Home';
 
 function App() {
 
@@ -16,9 +17,7 @@ function App() {
         <ThemeProvider theme={darkTheme}>
             <div className="App">
                 <div className="menu">
-                    <Link to="/"><h2>Home</h2></Link>
-                    <Link to="/WebRTC"><h2>WebRTC</h2></Link>
-                    <Link to="/Whiteboard"><h2>Whiteboard</h2></Link>
+                    <Link to="/"><HomeIcon fontSize="large"/></Link>
                 </div>
 
                 <Switch>
@@ -37,3 +36,7 @@ function App() {
 }
 
 export default App;
+
+/** links to other apps
+ * <Link to="/WebRTC"><h2>WebRTC</h2></Link>
+ * <Link to="/Whiteboard"><h2>Whiteboard</h2></Link>*/

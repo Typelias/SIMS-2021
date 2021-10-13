@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import Image from '../../../Assets/Images/conferenceRoom.jpg' 
 
 const Container = styled.div`
-    width: 100%;
-    height: 80vh;
+    width: auto;
+    height: 110%;
     background-image: url(${ Image });
     background-size: 100% 100%;
+    margin-top: -2%;
+    margin-left: -1%;
  `
 
 const CamView = () => {

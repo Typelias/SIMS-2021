@@ -5,6 +5,7 @@ import CamView from './CamViewDiv/CamView'
 
 const Container = styled.div`
     width: auto;
+    height: 85vh;
     margin-right: 16rem;
     position: relative;
     padding: 0 4rem;

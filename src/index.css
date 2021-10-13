@@ -29,11 +29,12 @@ body {
 
 .menu {
   display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-evenly;
+  width: 10vh;
+  flex-direction: column;
+  justify-content: left;
   text-decoration: none;
-  padding-right: 16rem;
+  padding-left: 1vh;
+  padding-top: 1vh;
   color: white;
 }
 
