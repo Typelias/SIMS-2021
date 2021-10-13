@@ -27,8 +27,6 @@ const SectionMid = styled.div`
     display: inherit;
     align-items: center;
     margin-left: auto;
-    
-
 `
 const SectionRight = styled.div`
     display: inherit;
@@ -56,9 +54,6 @@ const Container = styled.div`
     gap: 5%;
     flex-direction: row;
     align-items: center;
-    
-
-    
 `
 
 
