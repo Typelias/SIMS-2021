@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>White Board</title>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A Collabrative White board">
+    <link rel="stylesheet" href="style.css" type="text/css" />
+	</head>
+    
+	<body>
+	<div class="container">
+        <div class = "container panel">
+        <button type="button" class="btn btn-warning btn-sm" value="pencil" id="pencil-button">Pencil</button>
+        <button type="button" class="btn btn-warning btn-sm" value="rect" id="rect-button">Rectangle</button>
+        <button type="button" class="btn btn-warning btn-sm" value="eraser" id="eraser-button">Eraser</button>
+        <button type="button" class="btn btn-warning btn-sm" value="ellipse" id="ellipse-button">Ellipse</button>
+        <button type="button" class="btn btn-warning btn-sm" value="line" id="line-button">Line</button>
+        <button type="button" class="btn btn-warning btn-sm" value="text" id="text-button">Text</button>
+        <button type="button" class="btn btn-warning btn-sm" value="text" id="note-button">Note</button>
+        <button type="button" class="btn btn-warning btn-cler" id="clear-all">Clear All</button>
+        <label for="colour" style="color:white;">Color : </label>
+        <input id="colour-picker" value="#000000" style="width:80px;" class="jscolor {width:243, height:150, position:'right',
+    borderColor:'#FFF', insetColor:'#FFF', backgroundColor:'#666'}">
+
+        <span class="form-group"  style="margin-left:5px">
+          <label for="line-Width">Thickness: </label>
+          <select class="form-control" id="line-Width">
+            <option>2</option>
+            <option>4</option>
+            <option>6</option>
+            <option>8</option>
+            <option>10</option>
+            <option>12</option>
+            <option>14</option>
+          </select>
+        </span>
+         <span class="form-group" style="margin-left:5px;">
+          <label for="draw-text-font-family">Font: </label>
+          <select class="form-control" id="draw-text-font-family">
+            <option value="Arial" selected>Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="serif">serif</option>
+            <option value="sans-serif">sans-serif</option>
+          </select>
+        </span>
+        <span class="form-group" style="margin-left:5px">
+          <label for="draw-text-font-size">Font Size: </label>
+          <select class="form-control" id="draw-text-font-size" disabled>
+            <option value="16px" selected>16 Px</option>
+            <option value="18px">18 Px</option>
+            <option value="20px">20 Px</option>
+            <option value="22px">22 Px</option>
+            <option value="24px">24 Px</option>
+            <option value="26px">26 Px</option>
+            <option value="28px">28 Px</option>
+            <option value="30px">30 Px</option>
+            <option value="32px">32 Px</option>
+            <option value="34px">34 Px</option>
+            <option value="36px">36 Px</option>
+            <option value="38px">38 Px</option>
+            <option value="40px">40 Px</option>
+          </select>
+        </span>
+      </div>
+
+        <div id="container">
+          <div id = "curs" class = "pen">
+          <canvas id="imageView" width="1400" height="720">
+            <p>Unfortunately, your browser is currently unsupported by our web
+            application.  We are sorry for the inconvenience. Please use one of the
+            supported browsers listed below, or draw the image you want using an
+            offline tool.</p>
+            <p>Supported browsers: <a href="http://www.opera.com">Opera</a>, <a
+              href="http://www.mozilla.com">Firefox</a>, <a
+              href="http://www.apple.com/safari">Safari</a>, and <a
+              href="http://www.konqueror.org">Konqueror</a>.</p>
+          </canvas>
+        </div>
+        </div>
+    </div>
+    
+<!-- Script files -->
+        <script src='jquery.min.js'></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="jscolor/jscolor.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+		    <script src="canvas.js"></script> 
+
+     <script type="text/javascript">
+      $(document).ready(function(){
+          var board_url = window.location.href;
+          $('.linkToBoard').attr("href",board_url);
+      });
+    </script>
+    
+    <script type="text/javascript">
+    
+    $(document).ready(function(){
+	    $('#eraser-button').click(function () {
+        if ($("#curs").hasClass('eraser')==false){
+          $('#curs').removeClass('pen');
+          $('#curs').addClass('eraser');} 
+		});
+		});
+   
+    $(document).ready(function(){
+	    $('#pencil-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+    
+    $(document).ready(function(){
+	    $('#rect-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+
+    $(document).ready(function(){
+	    $('#ellipse-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+
+    $(document).ready(function(){
+	    $('#line-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+
+    $(document).ready(function(){
+	    $('#text-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+
+    $(document).ready(function(){
+	    $('#note-button').click(function () {
+        if ($("#curs").hasClass('pen')==false) 
+        {
+          $('#curs').removeClass('eraser');
+          $('#curs').addClass('pen');} 
+		});
+		});
+    </script>
+  	</body>
+</html>
