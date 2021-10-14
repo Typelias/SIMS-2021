@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Link, Redirect, useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import TextField from '@mui/material/TextField';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { Card, CardContent, CardActions, Typography } from "@mui/material";
 import styled from 'styled-components'
-import Button, { ButtonProps } from '@mui/material/Button';
+import Button from '@mui/material/Button';
 
 
 
@@ -32,9 +32,9 @@ function SignInHook() {
     const PurpleButton = styled(Button)`
         color: ${({ theme }) => theme.textColor};
         border: none;
-        margin: 0% auto;
+        margin-left: 5%;
         background-color: ${({ theme }) => theme.headerNumber};
-        padding: 4%;
+        padding: 2%;
         border-radius: 8px;
         &:hover {
           background-color: ${({ theme }) => theme.secondary};
@@ -46,8 +46,9 @@ function SignInHook() {
         <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto"}}>
         <Typography sx={{ fontSize: 24, fontWeight: 'bold', padding: "5%", textAlign: 'center' }} >SPV Hybrid Meetings</Typography>
         <CardContent>
-            <Typography sx={{ fontSize: 12 }}  color="text.secondary">Please enter your information</Typography>
+            <Typography sx={{ fontSize: 12, margin: "2%" }}  color="text.secondary">Please enter your information</Typography>
             <TextField 
+                sx={{ margin: "2%" }}
                 className="inputBox" 
                 label="Username" 
                 value={username}
@@ -55,6 +56,7 @@ function SignInHook() {
                 variant="outlined">
                 </TextField>
             <TextField 
+                sx={{ margin: "2%" }}
                 className="inputBox" 
                 label="Room ID" 
                 value={roomid}

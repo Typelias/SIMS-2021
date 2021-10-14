@@ -5,15 +5,11 @@ import Camera from './BottomBarIcons/Camera';
 import WhiteboardIcon from './BottomBarIcons/WhiteboardIcon'; 
 import Settings from './BottomBarIcons/Settings'; //settingsicon
 import ScreenShare from './BottomBarIcons/ScreenShare'; //screenshare icon
-import HomeIcon from '@mui/icons-material/Home';
+import Home from './BottomBarIcons/Home';
 import { Link } from "react-router-dom"
 
 
-const Style = {
-    fontSize: 40, 
-    margin: "5vh",
-    color: "#FFF",
-}
+
 
 const SectionLeft = styled.div`
     display: inherit;
@@ -72,7 +68,7 @@ const BottomBar = () => {
                     <Settings/>  
             </SectionRight>
             <SectionEnd>
-                <Link to="/"><HomeIcon sx={Style}/></Link>
+                <Link to="/"><Home/></Link>
             </SectionEnd>
                 
         </Container>
