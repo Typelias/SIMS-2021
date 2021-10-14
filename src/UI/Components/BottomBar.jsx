@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import Microphone from './BottomBarIcons/Microphone'; //mic on icon
-import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff'; //camera off icon
-import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'; //settingsicon
-import ScreenShareRoundedIcon from '@mui/icons-material/ScreenShareRounded'; //screenshare icon
-import GestureIcon from '@mui/icons-material/Gesture'; //whiteboard icon
+import Microphone from './BottomBarIcons/Microphone'; 
+import Camera from './BottomBarIcons/Camera';   
+import WhiteboardIcon from './BottomBarIcons/WhiteboardIcon'; 
+import Settings from './BottomBarIcons/Settings'; //settingsicon
+import ScreenShare from './BottomBarIcons/ScreenShare'; //screenshare icon
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from "react-router-dom"
+
 
 const Style = {
     fontSize: 40, 
@@ -61,15 +61,15 @@ const BottomBar = () => {
     return (
         <Container>
             <SectionLeft>
-                <Microphone />
-                <PhotoCameraFrontIcon sx={Style}/>    
+                <Microphone/>
+                <Camera/> 
             </SectionLeft>
             <SectionMid>
-                <GestureIcon sx={Style}/>
+                <WhiteboardIcon/>
             </SectionMid>
             <SectionRight>
-                    <ScreenShareRoundedIcon sx={Style}/>
-                    <SettingsRoundedIcon sx={Style}/>  
+                    <ScreenShare/>
+                    <Settings/>  
             </SectionRight>
             <SectionEnd>
                 <Link to="/"><HomeIcon sx={Style}/></Link>

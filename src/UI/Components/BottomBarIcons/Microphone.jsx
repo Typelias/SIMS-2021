@@ -25,11 +25,11 @@ const Microphone = () => {
     function MicStateChange(){
         setMicstate(!MicState);
     }
-    function MicrophoneOn(){
-        return <MicRoundedIcon/>
-    }
+
     return (
-        <Container onClick={MicStateChange}>{MicState ? <MicRoundedIcon sx={Style}/> : <MicOffRoundedIcon sx={Style}/>}</Container>
+        <Container onClick={MicStateChange}>
+            {MicState ? <MicRoundedIcon sx={Style}/> : <MicOffRoundedIcon sx={Style}/>}
+        </Container>
     )
 }
 
