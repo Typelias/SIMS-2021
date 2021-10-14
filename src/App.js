@@ -8,17 +8,17 @@ import HomeOfficeHook from './Home/HomeOfficeHook';
 import WhiteBoard from './Whiteboard/WhiteBoard';
 import { ThemeProvider } from 'styled-components'
 import { lightTheme, darkTheme } from './UI/Styles/Theme'
-import HomeIcon from '@mui/icons-material/Home';
 
 function App() {
 
   return (
     <HashRouter>
-        <ThemeProvider theme={darkTheme}>
+        
             <div className="App">
                 
 
                 <Switch>
+                <ThemeProvider theme={darkTheme}>
                     <Route exact path="/" component={ReactApp} />
                     <Route exact path="/PlaceChoice" component={PlaceChoice}/>
                     <Route exact path="/OfficeUi" component={OfficeUi}/>
@@ -26,9 +26,10 @@ function App() {
                     <Route exact path="/HomeUi" component={HomeUi}/>
                     <Route exact path="/WebRTC" component={WebRTCMain} />
                     <Route exact path="/Whiteboard" component={WhiteBoard} />
+                </ThemeProvider>
                 </Switch>
             </div>
-        </ThemeProvider>
+        
         </HashRouter>
   );
 }

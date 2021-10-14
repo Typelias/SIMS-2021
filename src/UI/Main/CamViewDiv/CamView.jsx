@@ -1,17 +1,28 @@
 import React from 'react'
 import styled from 'styled-components'
-import Image from '../../../Assets/Images/conferenceRoom.jpg' 
+import ImageHome from '../../../Assets/Images/conferenceRoom.jpg' 
+import ImageOffice from '../../../Assets/Images/Office.png'
 
-const Container = styled.div`
+
+
+const CamView = (props) => {
+    function imageView()  {
+        if(props.Place === "Home"){
+            return (ImageHome)
+        }else{
+            return (ImageOffice)
+        }
+    }
+
+    const Container = styled.div`
     width: auto;
     height: 110%;
-    background-image: url(${ Image });
+    background-image: url(${ imageView });
     background-size: 100% 100%;
     margin-left: -4%;
     margin-right: -4%;
  `
 
-const CamView = () => {
     return (
         <Container>
             

@@ -52,12 +52,14 @@ function SignInHook() {
                 className="inputBox" 
                 label="Username" 
                 value={username}
+                color='secondary'
                 onChange={(e) => setUsername(e.target.value)} 
                 variant="outlined">
                 </TextField>
             <TextField 
                 sx={{ margin: "2%" }}
                 className="inputBox" 
+                color='secondary'
                 label="Room ID" 
                 value={roomid}
                 onChange={(e) => setRoomid(e.target.value)}

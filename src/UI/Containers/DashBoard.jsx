@@ -5,11 +5,11 @@ import BottomBar from '../Components/BottomBar';
 
 
 
-const DashBoard = () => {
+const DashBoard = (props) => {
     return (
         <div>
             <SideBar/>
-            <Main/>
+            <Main Place={props.Place}/>
             <BottomBar/>
         </div>
     )

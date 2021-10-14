@@ -6,10 +6,7 @@ class HomeUi extends React.Component  {
 
     render(){
         return(
-            <div>
-                <BaseUi/>
-                
-            </div>
+                <BaseUi Place="Home"/>
             
 
         );

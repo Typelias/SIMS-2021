@@ -4,10 +4,10 @@ import { lightTheme, darkTheme } from './Styles/Theme'
 
 
 
-const BaseUi = () => {
+const BaseUi = (props) => {
     return (
         
-        <DashBoard />
+        <DashBoard Place={props.Place}/>
         
 
     )

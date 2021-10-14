@@ -12,10 +12,10 @@ const Container = styled.div`
 `
 
 
-const Main = () => {
+const Main = (props) => {
     return (
         <Container>
-            <CamView/>
+            <CamView Place={props.Place}/>
         </Container>
     )
 }
