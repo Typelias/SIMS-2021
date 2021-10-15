@@ -1,13 +1,13 @@
 import ReactApp from './Home/ReactApp';
 import PlaceChoice from './Home/PlaceChoice';
-import { HashRouter, Link, Route, Switch } from "react-router-dom"
+import { HashRouter, Route, Switch } from "react-router-dom"
 import WebRTCMain from './WebRTC/WebRTCMain';
 import OfficeUi from './Home/OfficeUi';
 import HomeUi from './Home/HomeUi';
 import HomeOfficeHook from './Home/HomeOfficeHook';
 import WhiteBoard from './Whiteboard/WhiteBoard';
 import { ThemeProvider } from 'styled-components'
-import { lightTheme, darkTheme } from './UI/Styles/Theme'
+import {  darkTheme } from './UI/Styles/Theme'
 
 function App() {
 

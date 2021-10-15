@@ -43,7 +43,7 @@ function SignInHook() {
     
 
     return (
-        <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto"}}>
+        <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto", marginTop: "5%"}}>
         <Typography sx={{ fontSize: 24, fontWeight: 'bold', padding: "5%", textAlign: 'center' }} >SPV Hybrid Meetings</Typography>
         <CardContent>
             <Typography sx={{ fontSize: 12, margin: "2%" }}  color="text.secondary">Please enter your information</Typography>
