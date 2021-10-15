@@ -45,7 +45,7 @@ function WebRTCMain() {
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(async (stream) => {
       hub.current = new SignalR.HubConnectionBuilder()
-        .withUrl("http://192.168.1.113:5000/signalr")
+        .withUrl("http://localhost:5000/signalr")
         .configureLogging(SignalR.LogLevel.Information)
         .build();
       await hub.current.start();
@@ -54,7 +54,7 @@ function WebRTCMain() {
 
       myPeer.current = new Peer(myID.current, {
         path: "/",
-        host: "192.168.1.113",
+        host: "localhost",
         port: 5000
       })
 
@@ -120,7 +120,28 @@ function WebRTCMain() {
     peers[userId] = call;
   }
 
-  
+  function toggleVideo() {
+    let enabled = myVideoStream.current.srcObject.getVideoTracks()[0].enabled;
+    if (enabled) {
+      myVideoStream.current.srcObject.getVideoTracks()[0].enabled = false;
+    }
+    else {
+      myVideoStream.current.srcObject.getVideoTracks()[0].enabled = true;
+    }
+  }
+
+  function toggleAudio() {
+    let enabled = myVideoStream.current.srcObject.getAudioTracks()[0].enabled;
+    if (enabled) {
+      myVideoStream.current.srcObject.getAudioTracks()[0].enabled = false;
+    }
+    else {
+      myVideoStream.current.srcObject.getAudioTracks()[0].enabled = true;
+    }
+
+  }
+
+
 
 
   function removeDupes() {
@@ -156,6 +177,8 @@ function WebRTCMain() {
 
   return (
     <Container>
+      <button onClick={toggleVideo}> Video </button>
+      <button onClick={toggleAudio}> Audio </button>
       <VideoGrid>
         {
           removeDupes()
@@ -168,7 +191,7 @@ function WebRTCMain() {
           <h3>Users In Chat</h3>
           {
             Object.keys(userList).map(name => {
-              return <li key={name}> <Avatar sx={{bgcolor: red[200], marginRight: 1}}> {name.slice(0,1)} </Avatar> {name} </li>;
+              return <li key={name}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {name.slice(0, 1)} </Avatar> {name} </li>;
             })
           }
         </UserList>
@@ -177,13 +200,13 @@ function WebRTCMain() {
 
           {
             messages.map(message => {
-            console.log(messages.length)
-              return <li key={uuidv4()}> <Avatar sx={{bgcolor: red[200], marginRight: 1}}> {message.username.slice(0,1)} </Avatar> {message.message} </li>
+              console.log(messages.length)
+              return <li key={uuidv4()}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {message.username.slice(0, 1)} </Avatar> {message.message} </li>
             })
           }
           <form onSubmit={handleSubmit}>
-            <input type="text" value={message} onChange={handleChange}/>
-            <input type="submit" value="Send Message"/>
+            <input type="text" value={message} onChange={handleChange} />
+            <input type="submit" value="Send Message" />
           </form>
 
         </ChatContainer>
