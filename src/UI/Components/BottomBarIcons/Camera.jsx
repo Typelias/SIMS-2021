@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import FaceRetouchingOffIcon from '@mui/icons-material/FaceRetouchingOff'; //camera off icon
-import PhotoCameraFrontIcon from '@mui/icons-material/PhotoCameraFront';
+import { Icon } from '@iconify/react';
 
 const Style = {
     fontSize: 40
@@ -23,7 +22,7 @@ const Camera = () => {
         setCamstate(!CamState);
     }
     return (
-        <Container onClick={StateChange}>{CamState ? <PhotoCameraFrontIcon sx={Style}/> : <FaceRetouchingOffIcon sx={Style}/>}</Container>
+        <Container onClick={StateChange}>{CamState ? <Icon icon="bi:camera-video" style={Style}/> : <Icon icon="bi:camera-video-off" style={Style}/>}</Container>
     )
 }
 

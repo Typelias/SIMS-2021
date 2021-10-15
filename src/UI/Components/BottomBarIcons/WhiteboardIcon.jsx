@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import GestureIcon from '@mui/icons-material/Gesture'; //whiteboard icon
+import { Icon } from '@iconify/react'; //whiteboard icon
 
 const Style = {
-    fontSize: 40
+    fontSize: 48
 }
 const Container = styled.div`
     color: ${({ theme }) => theme.textColor};
@@ -23,7 +23,7 @@ const WhiteboardIcon = () => {
     }
     return (
         <Container onClick={whiteboardClick}>
-            <GestureIcon sx={Style}/>
+            <Icon icon="fluent:whiteboard-20-regular" style={Style}/>
         </Container>
     )
 }

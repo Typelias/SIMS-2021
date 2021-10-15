@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import HomeIcon from '@mui/icons-material/Home';
+import { Icon } from '@iconify/react';
 
 const Style = {
     fontSize: 40
@@ -19,7 +19,7 @@ const Container = styled.div`
 const Home = () => {
     return (
         <Container>
-            <HomeIcon sx={Style}/>
+            <Icon icon="icomoon-free:exit" style={Style}/>
         </Container>
     )
 }
