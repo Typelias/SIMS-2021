@@ -52,13 +52,13 @@ const Container = styled.div`
 `
 
 
-const BottomBar = () => {
+const BottomBar = ({mute, video}) => {
 
     return (
         <Container>
             <SectionLeft>
-                <Microphone/>
-                <Camera/> 
+                <Microphone mute={mute}/>
+                <Camera video={video}/>
             </SectionLeft>
             <SectionMid>
                 <WhiteboardIcon/>

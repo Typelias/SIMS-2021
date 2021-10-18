@@ -4,13 +4,34 @@ import Main from '../Main/Main';
 import BottomBar from '../Components/BottomBar';
 
 
-
-const DashBoard = (props) => {
+const DashBoard = ({
+                       users,
+                       messages,
+                       videoList,
+                       muteCallback,
+                       videoCallback,
+                       submitCallback,
+                       messageChangeCallback,
+                       place,
+                       children,
+                       currentMessage
+                   }) => {
     return (
         <div>
-            <SideBar/>
-            <Main Place={props.Place}/>
-            <BottomBar/>
+            <SideBar
+                users={users}
+                messages={messages}
+                messageChangeCallback={messageChangeCallback}
+                submitCallback={submitCallback}
+                currentMessage={currentMessage}
+            />
+            <Main place={place} list={videoList}>
+                {children}
+            </Main>
+            <BottomBar
+                mute={muteCallback}
+                video={videoCallback}
+            />
         </div>
     )
 }

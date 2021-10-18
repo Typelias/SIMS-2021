@@ -8,6 +8,8 @@ import HomeOfficeHook from './HomeOfficeHook';
 
 class PlaceChoice extends React.Component  {
 
+
+
     
     render() {
         

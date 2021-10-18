@@ -24,6 +24,8 @@ function SignInHook() {
     function handleClick() {
         console.log("current Username is: " + username)
         console.log("current RoomId is: " + roomid)
+        window.USERNAME = username;
+        window.ROOM = roomid;
         history.push("/PlaceChoice")
       }
 

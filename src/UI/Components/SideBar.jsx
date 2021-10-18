@@ -26,13 +26,26 @@ const ChatDiv = styled.div`
     height: 50%;
 `
 
-const Sidebar = () => {
-
+const Sidebar = ({users,messages, messageChangeCallback, submitCallback, currentMessage}) => {
     return (
         <Container>
 
-            <ParticipantsDiv> Participants </ParticipantsDiv>
-            <ChatDiv> Chat </ChatDiv>
+            <ParticipantsDiv>
+                {
+                    Object.keys(users).map((name, index) => {
+                        return <li key={index}>{name}</li>
+                    })
+                }
+            </ParticipantsDiv>
+            <ChatDiv> {messages.map((message, index) => {
+                return <li key={index}>{message.username+": "+message.message}</li>
+            })}
+                <form onSubmit={submitCallback}>
+                    <input type="text" value={currentMessage} onChange={messageChangeCallback} />
+                    <input type="submit" value="Send Message" />
+                </form>
+
+            </ChatDiv>
            
         </Container>
     )

@@ -16,10 +16,11 @@ const Container = styled.div`
     }
 `
 
-const Camera = () => {
+const Camera = ({video}) => {
     const [CamState, setCamstate] = useState(true);
     function StateChange(){
         setCamstate(!CamState);
+        video();
     }
     return (
         <Container onClick={StateChange}>{CamState ? <Icon icon="bi:camera-video" style={Style}/> : <Icon icon="bi:camera-video-off" style={Style}/>}</Container>

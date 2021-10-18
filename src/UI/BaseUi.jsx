@@ -1,16 +1,11 @@
 import React from 'react'
-import DashBoard from './Containers/DashBoard';
+import WebRTCMain from '../WebRTC/WebRTCMain';
 
 
 
 
 const BaseUi = (props) => {
-    return (
-        
-        <DashBoard Place={props.Place}/>
-        
-
-    )
+    return <WebRTCMain/>
 }
 
 export default BaseUi

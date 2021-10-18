@@ -1,21 +1,27 @@
-import React from 'react'
-import styled  from 'styled-components'
+import React, {useEffect, useRef} from 'react'
+import styled from 'styled-components'
 import CamView from './CamViewDiv/CamView'
+import {UserVid} from "../../WebRTC/WebRTCMain";
 
 
 const Container = styled.div`
-    width: auto;
-    height: 85vh;
-    margin-right: 16rem;
-    position: relative;
-    padding: 0 4rem;
+  width: auto;
+  height: 85vh;
+  margin-right: 16rem;
+  position: relative;
+  padding: 0 4rem;
 `
 
 
-const Main = (props) => {
+
+
+const Main = ({place, list, children}) => {
+
+
     return (
         <Container>
-            <CamView Place={props.Place}/>
+            <CamView place={place}/>
+            {children}
         </Container>
     )
 }

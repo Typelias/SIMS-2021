@@ -20,10 +20,11 @@ const Container = styled.div`
     }
 `
 
-const Microphone = () => {
+const Microphone = ({mute}) => {
     const [MicState, setMicstate] = useState(true);
     function MicStateChange(){
         setMicstate(!MicState);
+        mute();
     }
 
     return (
