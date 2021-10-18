@@ -148,39 +148,27 @@ function WebRTCMain() {
 
     }
 
-    /*const toggleStreamAudio = () => {
-        let enabled = myStreamObject.current.getAudioTracks()[0].enabled;
-        if (enabled) {
-            myStreamObject.current.getAudioTracks()[0].enabled = false;
-        } else {
-            myStreamObject.current.getAudioTracks()[0].enabled = true;
-        }
-    }
-
-    const toggleStreamVideo = () => {
-        let enabled = myStreamObject.current.getVideoTracks()[0].enabled;
-        console.log("YEET", enabled)
-        if (enabled) {
-            myStreamObject.current.getVideoTracks()[0].enabled = false;
-        } else {
-            console.log("Hej hallå")
-            myStreamObject.current.getVideoTracks()[0].enabled = true;
-        }
-    }*/
-
 
     function removeDupes() {
 
         const usedID = [];
 
-        const vids = videos.map((stream, index) => {
+        /*const vids = videos.map((stream, index) => {
             if (usedID.indexOf(stream.id) > -1) {
                 return null;
             }
             usedID.push(stream.id);
             return <Video stream={stream} key={index}/>
 
-        });
+        });*/
+
+        const vids = videos.map(stream => {
+            if(usedID.indexOf(stream.id) > -1) {
+                return;
+            }
+            usedID.push(stream.id);
+            return stream;
+        })
 
         return vids;
 
