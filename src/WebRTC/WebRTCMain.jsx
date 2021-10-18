@@ -51,7 +51,7 @@ function WebRTCMain() {
         navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(async (stream) => {
 
             hub.current = new SignalR.HubConnectionBuilder()
-                .withUrl("http://localhost:5000/signalr")
+                .withUrl("http://192.168.1.8:5000/signalr")
                 .configureLogging(SignalR.LogLevel.Information)
                 .build();
             await hub.current.start();
@@ -60,7 +60,7 @@ function WebRTCMain() {
 
             myPeer.current = new Peer(myID.current, {
                 path: "/",
-                host: "localhost",
+                host: "192.168.1.8",
                 port: 5000
             })
 
