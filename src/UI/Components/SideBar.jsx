@@ -11,7 +11,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
 `
 const ParticipantsDiv = styled.div`
     border-radius: 5px;
@@ -24,7 +23,6 @@ const ChatDiv = styled.div`
     border: solid;
     border-color: white;
     height: 50%;
-   
 `
 const MessagesSection = styled.div`
     top:0;
@@ -32,7 +30,6 @@ const MessagesSection = styled.div`
     word-wrap: break-word;
     height: 90%;
     padding: 2%;
-
 `
 
 const NewMessageSection = styled.div`
@@ -41,10 +38,6 @@ const NewMessageSection = styled.div`
     border: solid;
     border-color: white;
     justify-content: flex-start;
-
-
-    
-
 `
 
 const Sidebar = ({users,messages, messageChangeCallback, submitCallback, currentMessage}) => {
