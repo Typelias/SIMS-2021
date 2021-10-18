@@ -39,6 +39,7 @@ const Box = (props) => {
 }
 
 const VideoBox = (props) => {
+    const mesh = useRef();
 
     const [video] = useState(() => {
         const vid = document.createElement("video");
@@ -47,8 +48,12 @@ const VideoBox = (props) => {
         return vid;
     })
     useEffect(() => void video.play(), [video])
+    useFrame(() => {
+        mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
+    });
 
     return <mesh
+        ref={mesh}
         {...props}
         scale={[2, 2, 2]}>
         <boxBufferGeometry args={[1, 1, 1]}/>
