@@ -26,7 +26,11 @@ function SignInHook() {
         console.log("current RoomId is: " + roomid)
         window.USERNAME = username;
         window.ROOM = roomid;
-        history.push("/PlaceChoice")
+        history.push({
+          pathname: '/PlaceChoice',
+          state: username,
+        });
+
       }
 
 

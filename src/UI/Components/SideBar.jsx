@@ -24,6 +24,27 @@ const ChatDiv = styled.div`
     border: solid;
     border-color: white;
     height: 50%;
+   
+`
+const MessagesSection = styled.div`
+    top:0;
+    overflow-y: auto;
+    word-wrap: break-word;
+    height: 90%;
+    padding: 2%;
+
+`
+
+const NewMessageSection = styled.div`
+    display: inline-flex;
+    width: 100%;
+    border: solid;
+    border-color: white;
+    justify-content: flex-start;
+
+
+    
+
 `
 
 const Sidebar = ({users,messages, messageChangeCallback, submitCallback, currentMessage}) => {
@@ -37,12 +58,15 @@ const Sidebar = ({users,messages, messageChangeCallback, submitCallback, current
                     })
                 }
             </ParticipantsDiv>
-            <ChatDiv> {messages.map((message, index) => {
+            <ChatDiv> <MessagesSection > {messages.map((message, index) => {
                 return <li key={index}>{message.username+": "+message.message}</li>
             })}
+            </MessagesSection>
                 <form onSubmit={submitCallback}>
-                    <input type="text" value={currentMessage} onChange={messageChangeCallback} />
-                    <input type="submit" value="Send Message" />
+                    <NewMessageSection>
+                        <textarea style={{resize: 'none'}} rows="2" cols="25" type="text" value={currentMessage} onChange={messageChangeCallback} />
+                        <input type="submit" value="Send" />
+                    </NewMessageSection>
                 </form>
 
             </ChatDiv>

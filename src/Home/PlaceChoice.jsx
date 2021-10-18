@@ -10,6 +10,7 @@ class PlaceChoice extends React.Component  {
 
 
 
+    uName = this.props.location.state
     
     render() {
         
