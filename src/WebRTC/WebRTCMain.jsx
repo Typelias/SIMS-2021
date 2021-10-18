@@ -3,6 +3,9 @@ import Peer from 'peerjs';
 import styled from 'styled-components'
 import React, { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { Avatar } from '@mui/material';
+import { bgcolor } from '@mui/system';
+import { red } from '@mui/material/colors';
 
 
 
@@ -11,18 +14,19 @@ const StyledVideo = styled.video`
   width: 300px
 `
 
-const Video = ({stream}) => {
-    const ref = useRef();
+const Video = ({ stream }) => {
+  const ref = useRef();
 
-    console.log("YEET");
-    useEffect(( ) => {
-      ref.current.srcObject = stream;
-    }, [])
-    
+  console.log("YEET");
+  useEffect(() => {
+    ref.current.srcObject = stream;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-    return (
-        <StyledVideo muted playsInline autoPlay ref={ref}/>
-    );
+
+  return (
+    <StyledVideo playsInline autoPlay ref={ref} />
+  );
 }
 
 function WebRTCMain() {
@@ -34,11 +38,14 @@ function WebRTCMain() {
   const myVideoStream = useRef();
   const peers = {};
   const myID = useRef();
+  const [messages, setMessages] = useState([]);
+  const [userList, setUserlist] = useState({});
+  const [message, changeMessage] = useState("");
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(async (stream) => {
       hub.current = new SignalR.HubConnectionBuilder()
-        .withUrl("http://192.168.1.149:5000/signalr")
+        .withUrl("http://localhost:5000/signalr")
         .configureLogging(SignalR.LogLevel.Information)
         .build();
       await hub.current.start();
@@ -47,7 +54,7 @@ function WebRTCMain() {
 
       myPeer.current = new Peer(myID.current, {
         path: "/",
-        host: "192.168.1.149",
+        host: "localhost",
         port: 5000
       })
 
@@ -57,7 +64,6 @@ function WebRTCMain() {
       myPeer.current.on('call', call => {
         console.log("Called");
         call.answer(stream);
-        const video = document.createElement('video');
         call.on('stream', userVideoStream => {
           console.log("Got stream");
           addVideoStream(userVideoStream);
@@ -65,22 +71,32 @@ function WebRTCMain() {
       });
 
       hub.current.on('UserConnected', userId => {
-        if(userId == myID.current) return;
+        if (userId === myID.current) return;
         connectToNewUser(userId, stream);
       })
       hub.current.on("UserDisconnected", userId => {
         if (peers[userId]) peers[userId].close();
+      });
+
+      hub.current.on("UserList", newUserList => {
+        console.log(newUserList);
+        setUserlist(newUserList);
+      });
+
+      hub.current.on("createMessage", (message, username) => {
+        console.log(message)
+        var newMessage = {
+          username,
+          message
+        };
+        setMessages(mess => [...mess, newMessage])
       })
 
       myPeer.current.on('open', id => {
-        hub.current.invoke("JoinRoom", ROOMID, id);
+        hub.current.invoke("JoinRoom", ROOMID, id, myID.current.slice(0, 5));
       });
-
-
-
     });
-
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   function addVideoStream(stream) {
@@ -89,22 +105,43 @@ function WebRTCMain() {
 
   function connectToNewUser(userId, stream) {
     const call = myPeer.current.call(userId, stream);
-    const video = document.createElement('video');
-    const vid = React.createElement('video');
     const streamID = stream.id;
 
     call.on('stream', userVideoStream => {
       console.log("Got stream");
       addVideoStream(userVideoStream);
-    }); 
+    });
     call.on('close', () => {
       let vids = videos;
-      vids = videos.filter(vid => vid!=streamID);
+      vids = videos.filter(vid => vid !== streamID);
       setVideos(vids);
     });
 
     peers[userId] = call;
   }
+
+  function toggleVideo() {
+    let enabled = myVideoStream.current.srcObject.getVideoTracks()[0].enabled;
+    if (enabled) {
+      myVideoStream.current.srcObject.getVideoTracks()[0].enabled = false;
+    }
+    else {
+      myVideoStream.current.srcObject.getVideoTracks()[0].enabled = true;
+    }
+  }
+
+  function toggleAudio() {
+    let enabled = myVideoStream.current.srcObject.getAudioTracks()[0].enabled;
+    if (enabled) {
+      myVideoStream.current.srcObject.getAudioTracks()[0].enabled = false;
+    }
+    else {
+      myVideoStream.current.srcObject.getAudioTracks()[0].enabled = true;
+    }
+
+  }
+
+
 
 
   function removeDupes() {
@@ -112,11 +149,11 @@ function WebRTCMain() {
     const usedID = [];
 
     const vids = videos.map((stream, index) => {
-      if(usedID.indexOf(stream.id) > -1) {
-        return
+      if (usedID.indexOf(stream.id) > -1) {
+        return null;
       }
       usedID.push(stream.id);
-      return <Video stream={stream} key={index}/>
+      return <Video stream={stream} key={index} />
 
     });
 
@@ -124,26 +161,120 @@ function WebRTCMain() {
 
   }
 
+  function handleChange(event) {
+    changeMessage(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    hub.current.invoke("Message", message);
+    changeMessage("");
+  }
+
+
+
 
 
   return (
-    <div className="App">
+    <Container>
+      <button onClick={toggleVideo}> Video </button>
+      <button onClick={toggleAudio}> Audio </button>
+      <VideoGrid>
+        {
+          removeDupes()
+        }
 
-      {
-        removeDupes()
-      }
+        <UserVid muted autoPlay ref={myVideoStream} />
+      </VideoGrid>
+      <SideBar>
+        <UserList>
+          <h3>Users In Chat</h3>
+          {
+            Object.keys(userList).map(name => {
+              return <li key={name}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {name.slice(0, 1)} </Avatar> {name} </li>;
+            })
+          }
+        </UserList>
+        <ChatContainer>
+          <h3>Chat</h3>
 
-      <UserVid muted autoPlay ref={myVideoStream}/>
-    </div>
+          {
+            messages.map(message => {
+              console.log(messages.length)
+              return <li key={uuidv4()}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {message.username.slice(0, 1)} </Avatar> {message.message} </li>
+            })
+          }
+          <form onSubmit={handleSubmit}>
+            <input type="text" value={message} onChange={handleChange} />
+            <input type="submit" value="Send Message" />
+          </form>
+
+        </ChatContainer>
+      </SideBar>
+    </Container>
   );
 }
 
+const ChatContainer = styled.div`
+  height: 70vh;
+  width:100%;
+  margin:0;
+  h3 {
+    margin: 0;
+    padding-top: 5px;
+    text-align: center;
+  }
+  li {
+    font-size: 1.5em;
+    display: flex;
+    align-items:center;
+    
+  }
+
+  li:hover {
+    opacity: 0.5;
+    border: 1 solid black;
+
+  }
+
+`
+
+const UserList = styled(ChatContainer)`
+  height: 30vh;
+  background-color: lightgray;
+  list-style: none;
+  overflow-y: scroll;
+  
+
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin:0;
+`
+
+const SideBar = styled.div`
+background-color: gray;
+  width: 20vw;
+  height: 100vh;
+`
+
 const UserVid = styled.video`
+
   position: absolute;
   width: 200px;
   height: 200px;
-  bottom: 0;
-  right:0;
+  bottom: 10px;
+  right: 10px;
+`
+
+const VideoGrid = styled.div`
+position: relative;
+  padding: 20px;
+  width:80vw;
+  height:80vh;
+  background-color: black;
 `
 
 export default WebRTCMain;
