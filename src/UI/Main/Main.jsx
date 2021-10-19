@@ -38,6 +38,55 @@ const Box = (props) => {
     );
 }
 
+const Table = (props) => {
+    return(
+    <mesh
+        {...props}>
+        <boxBufferGeometry args={[3, 0.0001, 8]}/>
+        <meshBasicMaterial color={0x964B00}/>
+    </mesh>)
+
+}
+
+const Floor = (props) => {
+    return(
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[10, 1, 100]}/>
+            <meshBasicMaterial color={0xa19255}/>
+        </mesh>)
+
+}
+
+const Wall = (props) => {
+    return(
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[1, 10, 100]}/>
+            <meshBasicMaterial color={0x918c74}/>
+        </mesh>)
+
+}
+const BackWall = (props) => {
+    return(
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[10, 10, 1]}/>
+            <meshBasicMaterial color={0x918c74}/>
+        </mesh>)
+
+}
+
+const Roof = (props) => {
+    return(
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[100, 1, 100]}/>
+            <meshBasicMaterial color={0xffffff}/>
+        </mesh>)
+
+}
+
 const VideoBox = (props) => {
     const mesh = useRef();
 
@@ -48,15 +97,35 @@ const VideoBox = (props) => {
         return vid;
     })
     useEffect(() => void video.play(), [video])
-    useFrame(() => {
-        mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
-    });
 
     return <mesh
         ref={mesh}
         {...props}
-        scale={[2, 2, 2]}>
-        <boxBufferGeometry args={[1, 1, 1]}/>
+        scale={[1, 1, 1]}
+    >
+        <planeBufferGeometry args={[1, 1, 1]}/>
+        <meshBasicMaterial>
+            <videoTexture args={[video]} attach="map"/>
+        </meshBasicMaterial>
+    </mesh>
+
+}
+
+const BigVideo = (props) => {
+    const [video] = useState(() => {
+        const vid = document.createElement("video");
+        vid.srcObject = props.stream;
+        vid.autoplay = true;
+        return vid;
+    })
+
+    useEffect(() => void video.play(), [video])
+
+    return <mesh
+        {...props}
+        scale={[2, 1, 1]}
+    >
+        <planeBufferGeometry args={[1, 1, 1]}/>
         <meshBasicMaterial>
             <videoTexture args={[video]} attach="map"/>
         </meshBasicMaterial>
@@ -71,17 +140,40 @@ const Main = ({place, list, children}) => {
     return (
         <Container>
             <Canvas>
-                <ambientLight intesity={0.5}/>
-                <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
-                <pointLight position={[-10, -10, -10]}/>
                 {
                     list.map((stream, index) => {
-                        if(stream === undefined) return ;
-                        const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloat(-3,3));
-                        return <VideoBox key={index} stream={stream} position={[x,y,0]}/>
+                        if(index === 1) {
+                            return <BigVideo stream={stream}/>
+                        }
+                        console.log(list.length);
+                        console.log(stream);
+                        if (stream === undefined) return;
+                        var rotation;
+                        var pos;
+                        if (index % 2 == 0) {
+                            rotation = [0, -0.4, 0]
+                            if (index < 3)
+                                pos = [2.5, 0, 2]
+                            else
+                                pos = [1.9, 0, 1]
+                        } else {
+                            rotation = [0, 0.4, 0]
+                            if (index < 3)
+                                pos = [-2.5, 0, 2]
+                            else
+                                pos = [-1.9, 0, 1]
+                        }
+                        return <VideoBox key={index} stream={stream} position={pos} rotation={rotation}/>
                     })
                 }
-                <Box position={[2.5, 0, 0]} />
+                <Table position={[0,-0.5,1.1]}/>
+                <Floor position={[0,-1,0]}/>
+                <Wall position={[4,0,0]}/>
+                <Wall position={[-4,0,0]}/>
+
+                <Roof position={[0,4,0]}/>
+                <BackWall position={[0,0,-1]}/>
+
             </Canvas>
             {children}
         </Container>

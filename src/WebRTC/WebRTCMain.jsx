@@ -161,13 +161,15 @@ function WebRTCMain() {
             return <Video stream={stream} key={index}/>
 
         });*/
+        const vids = [];
+        videos.forEach(stream => {
+            if (usedID.indexOf(stream.id) <= -1) {
+                if (stream != undefined) {
+                    usedID.push(stream.id);
+                    vids.push(stream);
+                }
 
-        const vids = videos.map(stream => {
-            if(usedID.indexOf(stream.id) > -1) {
-                return;
             }
-            usedID.push(stream.id);
-            return stream;
         })
 
         return vids;
@@ -261,6 +263,7 @@ function WebRTCMain() {
   li:hover {
     opacity: 0.5;
     border: 1 solid black;
+
 
   }
 
