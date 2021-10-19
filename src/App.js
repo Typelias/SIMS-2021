@@ -14,23 +14,21 @@ function App() {
   return (
     <HashRouter>
         
-            <div className="App">
-                
-
-                <Switch>
-                <ThemeProvider theme={darkTheme}>
-                    <Route exact path="/" component={ReactApp} />
-                    <Route exact path="/PlaceChoice" component={PlaceChoice}/>
-                    <Route exact path="/OfficeUi" component={OfficeUi}/>
-                    <Route exact path="/HomeOfficeHook" component={HomeOfficeHook}/>
-                    <Route exact path="/HomeUi" component={HomeUi}/>
-                    <Route exact path="/WebRTC" component={WebRTCMain} />
-                    <Route exact path="/Whiteboard" component={WhiteBoard} />
-                </ThemeProvider>
-                </Switch>
-            </div>
-        
-        </HashRouter>
+      <div className="App">
+          <Switch>
+            <ThemeProvider theme={darkTheme}>
+              <Route exact path="/" component={ReactApp} />
+              <Route exact path="/PlaceChoice" component={PlaceChoice}/>
+              <Route exact path="/OfficeUi" component={OfficeUi}/>
+              <Route exact path="/HomeOfficeHook" component={HomeOfficeHook}/>
+              <Route exact path="/HomeUi" component={HomeUi}/>
+              <Route exact path="/WebRTC" component={WebRTCMain} />
+              <Route exact path="/Whiteboard" component={WhiteBoard} />
+            </ThemeProvider>
+          </Switch>
+      </div>
+  
+    </HashRouter>
   );
 }
 
