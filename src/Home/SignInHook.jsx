@@ -10,8 +10,7 @@ import Button from '@mui/material/Button';
 
 function SignInHook() {
     let history = useHistory();
-    
-    const [formValues, updateFormValues] = useState({});
+
     const [username, setUsername] = useState("");
     const [roomid, setRoomid] = useState("");
     
@@ -23,6 +22,8 @@ function SignInHook() {
     function handleClick() {
         console.log("current Username is: " + username)
         console.log("current RoomId is: " + roomid)
+        const data = JSON.stringify({username, roomid})
+        window.localStorage.setItem('userInfo',data);
         window.USERNAME = username;
         window.ROOM = roomid;
         history.push({
@@ -35,27 +36,9 @@ function SignInHook() {
     useEffect(() => {
       const formData = window.localStorage.getItem("userInfo");
       const savedValues = JSON.parse(formData);
-      updateFormValues(savedValues.formValues);
       setUsername(savedValues.username);
+      setRoomid(savedValues.roomid);
     }, []);
-
-    useEffect(() => {
-      const valuesToSave = {formValues, username, roomid}
-      window.localStorage.setItem("userInfo", JSON.stringify(valuesToSave))
-    });
-   
-    const PurpleButton = styled(Button)`
-        color: ${({ theme }) => theme.textColor};
-        border: none;
-        margin-left: 5%;
-        background-color: ${({ theme }) => theme.headerNumber};
-        padding: 2%;
-        border-radius: 8px;
-        &:hover {
-          background-color: ${({ theme }) => theme.secondary};
-        }
-        `
-    
 
     return (
         <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto", marginTop: "5%"}}>
@@ -90,6 +73,17 @@ function SignInHook() {
    
 }
 
+const PurpleButton = styled(Button)`
+        color: ${({ theme }) => theme.textColor};
+        border: none;
+        margin-left: 5%;
+        background-color: ${({ theme }) => theme.headerNumber};
+        padding: 2%;
+        border-radius: 8px;
+        &:hover {
+          background-color: ${({ theme }) => theme.secondary};
+        }
+        `
 
 export default SignInHook
 

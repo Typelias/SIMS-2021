@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6a821870-fc76-457c-a569-74a1d53c584a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/Containers/DashBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Containers/DashBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Home/SignInHook.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Home/SignInHook.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/Main/Main.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/WebRTC/WebRTCMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebRTC/WebRTCMain.jsx" afterDir="false" />
     </list>
@@ -29,6 +29,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="ts.external.directory.path" value="D:\Program Files\JetBrains\WebStorm 2021.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -43,7 +44,7 @@
       <workItem from="1634584904288" duration="505000" />
       <workItem from="1634643551095" duration="1313000" />
       <workItem from="1634645023397" duration="5102000" />
-      <workItem from="1634716889589" duration="2992000" />
+      <workItem from="1634716889589" duration="11154000" />
     </task>
     <servers />
   </component>

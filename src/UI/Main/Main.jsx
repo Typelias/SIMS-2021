@@ -137,28 +137,30 @@ const BigVideo = (props) => {
 const Main = ({place, list, children, leaderID}) => {
 
 
+
+
     return (
         <Container>
             <Canvas>
                 {
                     list.map((stream, index) => {
+                        if(stream === null) return ;
                         if(stream.id === leaderID) {
                             return <BigVideo position={[0,0, 1]} stream={stream}/>
                         }
-                        console.log(list.length);
-                        console.log(stream);
+                        console.log(index);
                         if (stream === undefined) return;
                         var rotation;
                         var pos;
                         if (index % 2 == 0) {
                             rotation = [0, -0.4, 0]
-                            if (index < 2)
+                            if (index < 3)
                                 pos = [2.5, 0, 3]
                             else
                                 pos = [1.9, 0, 2]
                         } else {
                             rotation = [0, 0.4, 0]
-                            if (index < 2)
+                            if (index < 3)
                                 pos = [-2.5, 0, 3]
                             else
                                 pos = [-1.9, 0, 2]
