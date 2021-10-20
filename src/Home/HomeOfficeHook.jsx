@@ -35,7 +35,6 @@ const SmallPaper = styled(Paper)`
     line-height: 60px;
     margin-right: 10%;
     padding: 5%;
-   
     border-radius: 30px;
     cursor: pointer;
     transition: transform ease 300ms;
@@ -105,9 +104,8 @@ function HookTest() {
                     <PaperStyle elevation={5} onClick={pickOfficeMode}><BusinessRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><TypographyStyle>Office</TypographyStyle></PaperStyle>
                 </CenterRipple>   
                 <Box sx={{ position: 'absolute', display: 'flex', alignItems: "left", justifyContent: "left",  marginLeft: '-20%', marginTop: '20%'}}>
-                    <Grow sx={{ width: 240, height: 100 }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsLeader} ><IconStyle icon="si-glyph:person-people" /><TypographyStyleTwo>Meeting Leader</TypographyStyleTwo></SmallPaper></Grow>
-                    <Grow sx={{ width: 240, height: 100 }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsParticipant}><IconStyle icon="fluent:people-community-24-filled" /><TypographyStyleTwo>Participant</TypographyStyleTwo></SmallPaper></Grow>
-
+                    <Grow sx={{ width: '25vh', height: '12vh' }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsLeader} ><IconStyle icon="si-glyph:person-people" /><TypographyStyleTwo>Meeting Leader</TypographyStyleTwo></SmallPaper></Grow>
+                    <Grow sx={{ width: '25vh', height: '12vh' }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsParticipant}><IconStyle icon="fluent:people-community-24-filled" /><TypographyStyleTwo>Participant</TypographyStyleTwo></SmallPaper></Grow>
                 </Box>
                 
                 <CenterRipple> 
