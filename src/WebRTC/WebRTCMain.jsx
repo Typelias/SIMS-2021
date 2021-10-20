@@ -25,7 +25,10 @@ const Video = ({stream}) => {
         <StyledVideo playsInline autoPlay ref={ref}/>
     );
 }
-
+/*const [USERNAME, setUSERNAME] = useState("")
+const formData = window.localStorage.getItem("userInfo");
+        const savedValues = JSON.parse(formData);
+        setUSERNAME(savedValues.username);*/
 function WebRTCMain() {
 
     const hub = useRef();
@@ -33,6 +36,7 @@ function WebRTCMain() {
     const [videos, setVideos] = useState([]);
     let ROOMID = window.ROOM;
     let USERNAME = window.USERNAME;
+    
     const myVideoStream = useRef();
     //const myStreamObject = useRef();
     const peers = {};
@@ -41,10 +45,13 @@ function WebRTCMain() {
     const [messages, setMessages] = useState([]);
     const [userList, setUserlist] = useState({});
     const [message, changeMessage] = useState("");
+    
+ 
 
 
 
     useEffect(() => {
+        
         if (USERNAME === "" || USERNAME === null || USERNAME === undefined) {
             USERNAME = uuidv4().slice(0, 5);
         }
@@ -54,6 +61,7 @@ function WebRTCMain() {
         navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(async (stream) => {
 
             hub.current = new SignalR.HubConnectionBuilder()
+                /*.withUrl("http://192.168.1.8:5000/signalr")*/
                 .withUrl("http://localhost:5000/signalr")
                 .configureLogging(SignalR.LogLevel.Information)
                 .build();

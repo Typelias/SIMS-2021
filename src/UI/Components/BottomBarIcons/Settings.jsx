@@ -8,7 +8,8 @@ const Style = {
 const Container = styled.div`
     color: ${({ theme }) => theme.textColor};
     cursor: pointer;
-    margin: 5vh;
+    margin-left: 5vh;
+    margin-right: 5vh;
     transition: transform ease 300ms;
     &:hover{
         transform: scale(1.5);
