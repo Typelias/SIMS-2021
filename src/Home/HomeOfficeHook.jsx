@@ -6,6 +6,22 @@ import CenterRipple from '@mui/material/ButtonBase'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
 import HomeWorkRoundedIcon from '@mui/icons-material/HomeWorkRounded';
 
+const PaperStyle = styled(Paper)`
+    text-align: center;
+    background-color: ${({ theme }) => theme.colorGrey};
+    line-height: 60px;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    transition: transform ease 300ms;
+&:hover {
+    background-color: ${({ theme }) => theme.headerNumber};
+    transform: translate(0, -10px);
+}
+&:active {
+    background-color: ${({ theme }) => theme.colorBlack};
+}
+`
 
 function HookTest() {
 
@@ -18,22 +34,7 @@ function HookTest() {
         history.push("/HomeUi")
     }
     
-    const PaperStyle = styled(Paper)`
-        text-align: center;
-        background-color: ${({ theme }) => theme.colorGrey};
-        line-height: 60px;
-        height: 100%;
-        width: 100%;
-        cursor: pointer;
-        transition: transform ease 300ms;
-        &:hover {
-            background-color: ${({ theme }) => theme.headerNumber};
-            transform: translate(0, -10px);
-        }
-        &:active {
-            background-color: ${({ theme }) => theme.colorBlack};
-        }
-    `
+   
 
     const TypographyStyle = styled(Typography)`
         font-size: 24;
