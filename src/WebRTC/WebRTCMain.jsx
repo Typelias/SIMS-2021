@@ -46,9 +46,9 @@ function WebRTCMain() {
     useEffect(() => {
         const formData = window.localStorage.getItem("userInfo");
         const savedValues = JSON.parse(formData);
-
-        if (USERNAME === "" || USERNAME === undefined) {
-            USERNAME = savedValues.username;
+        USERNAME = savedValues.username;
+        if (USERNAME === "" || USERNAME === null || USERNAME === undefined) {
+            USERNAME = uuidv4().slice(0, 5);
         }
         if (ROOMID === "" || ROOMID === null || ROOMID === undefined) {
             ROOMID = "Tjuvholmen"
