@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom"
 import TextField from '@mui/material/TextField';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
@@ -11,8 +11,7 @@ import Button from '@mui/material/Button';
 function SignInHook() {
     let history = useHistory();
     
-    
-    
+    const [formValues, updateFormValues] = useState({});
     const [username, setUsername] = useState("");
     const [roomid, setRoomid] = useState("");
     
@@ -33,7 +32,17 @@ function SignInHook() {
 
       }
 
+    useEffect(() => {
+      const formData = window.localStorage.getItem("userInfo");
+      const savedValues = JSON.parse(formData);
+      updateFormValues(savedValues.formValues);
+      setUsername(savedValues.username);
+    }, []);
 
+    useEffect(() => {
+      const valuesToSave = {formValues, username, roomid}
+      window.localStorage.setItem("userInfo", JSON.stringify(valuesToSave))
+    });
    
     const PurpleButton = styled(Button)`
         color: ${({ theme }) => theme.textColor};
@@ -59,7 +68,7 @@ function SignInHook() {
                 label="Username" 
                 value={username}
                 color='secondary'
-                onChange={(e) => setUsername(e.target.value)} 
+                onChange={e => setUsername(e.target.value)} 
                 variant="outlined">
                 </TextField>
             <TextField 
@@ -68,7 +77,7 @@ function SignInHook() {
                 color='secondary'
                 label="Room ID" 
                 value={roomid}
-                onChange={(e) => setRoomid(e.target.value)}
+                onChange={e => setRoomid(e.target.value)}
                 variant="outlined">
                 </TextField>
         </CardContent>

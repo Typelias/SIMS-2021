@@ -33,6 +33,7 @@ function WebRTCMain() {
     const [videos, setVideos] = useState([]);
     let ROOMID = window.ROOM;
     let USERNAME = window.USERNAME;
+  
     const myVideoStream = useRef();
     //const myStreamObject = useRef();
     const peers = {};
@@ -40,10 +41,14 @@ function WebRTCMain() {
     const [messages, setMessages] = useState([]);
     const [userList, setUserlist] = useState({});
     const [message, changeMessage] = useState("");
+    
 
     useEffect(() => {
-        if (USERNAME === "" || USERNAME === null || USERNAME === undefined) {
-            USERNAME = uuidv4().slice(0, 5);
+        const formData = window.localStorage.getItem("userInfo");
+        const savedValues = JSON.parse(formData);
+
+        if (USERNAME === "" || USERNAME === undefined) {
+            USERNAME = savedValues.username;
         }
         if (ROOMID === "" || ROOMID === null || ROOMID === undefined) {
             ROOMID = "Tjuvholmen"
