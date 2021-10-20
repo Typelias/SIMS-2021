@@ -123,7 +123,7 @@ const BigVideo = (props) => {
 
     return <mesh
         {...props}
-        scale={[2, 1, 1]}
+        scale={[3, 3, 1]}
     >
         <planeBufferGeometry args={[1, 1, 1]}/>
         <meshBasicMaterial>
@@ -134,7 +134,7 @@ const BigVideo = (props) => {
 }
 
 
-const Main = ({place, list, children}) => {
+const Main = ({place, list, children, leaderID}) => {
 
 
     return (
@@ -142,8 +142,8 @@ const Main = ({place, list, children}) => {
             <Canvas>
                 {
                     list.map((stream, index) => {
-                        if(index === 1) {
-                            return <BigVideo stream={stream}/>
+                        if(stream.id === leaderID) {
+                            return <BigVideo position={[0,0, 1]} stream={stream}/>
                         }
                         console.log(list.length);
                         console.log(stream);
@@ -152,16 +152,16 @@ const Main = ({place, list, children}) => {
                         var pos;
                         if (index % 2 == 0) {
                             rotation = [0, -0.4, 0]
-                            if (index < 3)
-                                pos = [2.5, 0, 2]
+                            if (index < 2)
+                                pos = [2.5, 0, 3]
                             else
-                                pos = [1.9, 0, 1]
+                                pos = [1.9, 0, 2]
                         } else {
                             rotation = [0, 0.4, 0]
-                            if (index < 3)
-                                pos = [-2.5, 0, 2]
+                            if (index < 2)
+                                pos = [-2.5, 0, 3]
                             else
-                                pos = [-1.9, 0, 1]
+                                pos = [-1.9, 0, 2]
                         }
                         return <VideoBox key={index} stream={stream} position={pos} rotation={rotation}/>
                     })

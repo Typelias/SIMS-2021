@@ -14,7 +14,8 @@ const DashBoard = ({
                        messageChangeCallback,
                        place,
                        children,
-                       currentMessage
+                       currentMessage,
+    leaderID
                    }) => {
     return (
         <div>
@@ -25,7 +26,7 @@ const DashBoard = ({
                 submitCallback={submitCallback}
                 currentMessage={currentMessage}
             />
-            <Main place={place} list={videoList}>
+            <Main place={place} list={videoList} leaderID={leaderID}>
                 {children}
             </Main>
             <BottomBar

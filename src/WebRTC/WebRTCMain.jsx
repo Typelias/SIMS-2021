@@ -37,9 +37,12 @@ function WebRTCMain() {
     //const myStreamObject = useRef();
     const peers = {};
     const myID = useRef();
+    const leader = useRef("");
     const [messages, setMessages] = useState([]);
     const [userList, setUserlist] = useState({});
     const [message, changeMessage] = useState("");
+
+
 
     useEffect(() => {
         if (USERNAME === "" || USERNAME === null || USERNAME === undefined) {
@@ -77,8 +80,12 @@ function WebRTCMain() {
                 });
             });
 
-            hub.current.on('UserConnected', userId => {
+            hub.current.on('UserConnected', (userId, username) => {
                 if (userId === myID.current) return;
+                if(username.contain('(Meeting Leader)'))
+                {
+                    leader.current = userId;
+                }
                 connectToNewUser(userId, stream);
             })
             hub.current.on("UserDisconnected", userId => {
@@ -116,6 +123,10 @@ function WebRTCMain() {
 
         call.on('stream', userVideoStream => {
             console.log("Got stream");
+            if(userId == leader.current)
+            {
+                leader.current = userVideoStream.id;
+            }
             addVideoStream(userVideoStream);
         });
         call.on('close', () => {
@@ -198,97 +209,16 @@ function WebRTCMain() {
                 submitCallback={handleSubmit}
                 place="Home"
                 currentMessage={message}
+                leaderID={leader.current}
             >
                 <UserVid muted autoPlay ref={myVideoStream}/>
             </DashBoard>
         </div>
     );
-
-    /* return (
-      <Container>
-        <VideoGrid>
-          {
-            removeDupes()
-          }
-
-          <UserVid muted autoPlay ref={myVideoStream} />
-        </VideoGrid>
-        <SideBar>
-          <UserList>
-            <h3>Users In Chat</h3>
-            {
-              Object.keys(userList).map(name => {
-                return <li key={name}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {name.slice(0, 1)} </Avatar> {name} </li>;
-              })
-            }
-          </UserList>
-          <ChatContainer>
-            <h3>Chat</h3>
-
-            {
-              messages.map(message => {
-                console.log(messages.length)
-                return <li key={uuidv4()}> <Avatar sx={{ bgcolor: red[200], marginRight: 1 }}> {message.username.slice(0, 1)} </Avatar> {message.message} </li>
-              })
-            }
-            <form onSubmit={handleSubmit}>
-              <input type="text" value={message} onChange={handleChange} />
-              <input type="submit" value="Send Message" />
-            </form>
-
-          </ChatContainer>
-        </SideBar>
-      </Container>
-    ); */
 }
 
-/*const ChatContainer = styled.div`
-  height: 70vh;
-  width: 100%;
-  margin: 0;
-
-  h3 {
-    margin: 0;
-    padding-top: 5px;
-    text-align: center;
-  }
-
-  li {
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
-
-  }
-
-  li:hover {
-    opacity: 0.5;
-    border: 1 solid black;
 
 
-  }
-
-`*/
-
-/*const UserList = styled(ChatContainer)`
-  height: 30vh;
-  background-color: lightgray;
-  list-style: none;
-  overflow-y: scroll;
-  
-
-`*/
-
-/*const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin:0;
-`
-
-const SideBar = styled.div`
-background-color: gray;
-  width: 20vw;
-  height: 100vh;
-`*/
 
 export const UserVid = styled.video`
 
@@ -302,14 +232,5 @@ const UserVideoHidden = styled(UserVid)`
   display: none;
 `
 
-/*
-const VideoGrid = styled.div`
-position: relative;
-  padding: 20px;
-  width:80vw;
-  height:80vh;
-  background-color: black;
-`
-*/
 
 export default WebRTCMain;
