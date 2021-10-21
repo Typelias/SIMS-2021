@@ -4,6 +4,7 @@ import * as SignalR from "@microsoft/signalr";
 import BottomBar from "./Components/BottomBar";
 import styled from "styled-components";
 import Whiteboard from "../Whiteboard/WhiteBoard";
+import Board from "../WebRTC/board";
 
 
 const OfficeNonLeader = () => {
@@ -28,7 +29,7 @@ const OfficeNonLeader = () => {
         USERNAME = formData.username;
         ROOMID = formData.roomid;
         hub.current = new SignalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5000/signalr")
+            .withUrl("http://typelias.se:5000/signalr")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
 
@@ -56,7 +57,9 @@ const OfficeNonLeader = () => {
             setMessages(mess => [...mess, newMessage])
         })
 
-        init();
+        hub.current.start().then(() => {
+            hub.current.invoke("JoinRoom", ROOMID, "NoCameraUser", USERNAME);
+        })
 
 
 
@@ -77,7 +80,7 @@ const OfficeNonLeader = () => {
             <Sidebar users={userList} messages={messages} messageChangeCallback={handleChange}
                      submitCallback={handleSubmit} currentMessage={message}/>
             <Container>
-                <Whiteboard />
+                <Board/>
             </Container>
             <BottomBar/>
         </div>

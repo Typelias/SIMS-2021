@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 
   var canvas, context, canvaso, contexto;
-  document.getElementById("pencil-button").disabled = true;
+  //document.getElementById("pencil-button").disabled = true;
 
   // The active tool instance
   var tool;
