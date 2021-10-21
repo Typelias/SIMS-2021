@@ -42,7 +42,6 @@ function OfficeHook(){
             }, }}>
                 <CenterRipple disabled={loading}>
                     <TestPaper elevation={5} onClick={leaderRole}><GavelRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>Leader</Typography><br/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>{leader}/1</Typography></TestPaper>
-                    
                 </CenterRipple>   
                 <CenterRipple> 
                     <TestPaper elevation={5}><PeopleRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><Typography sx={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', color: "black" }}>Participant</Typography></TestPaper>

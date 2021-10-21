@@ -70,7 +70,7 @@ function HookTest() {
         console.log("meetingLeader entered!")
     }
     function goToOfficeAsParticipant(){
-        history.push("/OfficeUi")
+        history.push("/OfficeNonLeader")
     }
 
     function goToHome(){ 

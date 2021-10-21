@@ -24,7 +24,7 @@ function App() {
                         <Route exact path="/HomeOfficeHook" component={HomeOfficeHook}/>
                         <Route exact path="/HomeUi" component={HomeUi}/>
                         <Route exact path="/WebRTC" component={WebRTCMain}/>
-                        <Route exact path="/OfficeNoLeader" component={OfficeNonLeader}/>
+                        <Route exact path="/OfficeNonLeader" component={OfficeNonLeader}/>
                         <Route exact path="/Whiteboard/:id" component={Whiteboard}/>
                     </ThemeProvider>
                 </Switch>

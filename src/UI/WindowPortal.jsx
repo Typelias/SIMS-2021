@@ -16,7 +16,11 @@ class WindowPortal extends React.Component {
       // appended to or it will fail in Edge with a "Permission Denied"
       // or similar error.
       // See: https://github.com/rmariuzzo/react-new-window/issues/12#issuecomment-386992550
-      this.externalWindow = window.open('', '', 'width=1400,height=800,left=100,top=100');
+      let formData = window.localStorage.getItem("userInfo");
+      formData = JSON.parse(formData);
+      let room = formData.roomid;
+      console.log(room);
+      this.externalWindow = window.open('http://localhost:3000/Whiteboard/:' + room, '', 'width=1400,height=800,left=100,top=100');
       this.containerEl = this.externalWindow.document.createElement('div');
       this.externalWindow.document.body.appendChild(this.containerEl);
   
