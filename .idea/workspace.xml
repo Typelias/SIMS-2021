@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="6a821870-fc76-457c-a569-74a1d53c584a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI/OfficeNonLeader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/OfficeNonLeader.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Whiteboard/WhiteBoard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Whiteboard/WhiteBoard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UI/WindowPortal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI/WindowPortal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WebRTC/board.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/WebRTC/board.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

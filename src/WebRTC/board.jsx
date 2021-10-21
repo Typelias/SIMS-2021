@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import './board.css';
 import {HubConnectionBuilder} from "@microsoft/signalr";
 import * as SignalR from "@microsoft/signalr";
+import {useParams} from "react-router-dom";
 
 
 const Board = () => {
@@ -9,7 +10,16 @@ const Board = () => {
     const colorsRef = useRef(null);
     const socketRef = useRef();
 
+
+    let {id} = useParams();
+
     useEffect(() => {
+
+        console.log(id);
+        if(!id){
+            id =JSON.parse(window.localStorage.getItem('userInfo')).roomid;
+        }
+        console.log(id);
 
         // --------------- getContext() method returns a drawing context on the canvas-----
 
@@ -136,7 +146,7 @@ const Board = () => {
 
     const init = async () => {
         await socketRef.current.start()
-        socketRef.current.invoke("JoinRoom", "TESTINGROOM");
+        socketRef.current.invoke("JoinRoom", id);
 
     }
     // ------------- The Canvas and color elements --------------------------
