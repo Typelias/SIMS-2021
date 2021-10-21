@@ -14,7 +14,8 @@ function SignInHook() {
     const [username, setUsername] = useState("");
     const [roomid, setRoomid] = useState("");
     
-    
+    let tmp = "";
+    let newTmp = "";
     function validateEntry() {
       return username.length > 0 && roomid.length > 0;
     }
@@ -46,6 +47,12 @@ function SignInHook() {
       setRoomid(savedValues.roomid);
     }, []);
 
+    setRoomidString = (e) => {
+      tmp = e.target.value;
+      newTmp = tmp.replace(/ /g, "_");
+      console.log(newTmp + "\n" + tmp);
+      setRoomid(newTmp);
+    }
     return (
         <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto", marginTop: "5%"}}>
         <Typography sx={{ fontSize: 24, fontWeight: 'bold', padding: "5%", textAlign: 'center' }} >SPV Hybrid Meetings</Typography>
@@ -66,7 +73,7 @@ function SignInHook() {
                 color='secondary'
                 label="Room ID" 
                 value={roomid}
-                onChange={e => setRoomid(e.target.value)}
+                onChange={e => setRoomidString()}
                 variant="outlined">
                 </TextField>
         </CardContent>
