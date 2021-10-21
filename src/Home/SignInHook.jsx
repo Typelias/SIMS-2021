@@ -37,6 +37,11 @@ function SignInHook() {
       const formData = window.localStorage.getItem("userInfo");
       if(!formData) return;
       const savedValues = JSON.parse(formData);
+      if(savedValues.username.includes('(Meeting Leader)'))
+      {
+          const index = savedValues.username.indexOf('(Meeting Leader)');
+          savedValues.username = savedValues.username.slice(0, index);
+      }
       setUsername(savedValues.username);
       setRoomid(savedValues.roomid);
     }, []);

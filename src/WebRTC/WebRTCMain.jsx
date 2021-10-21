@@ -1,9 +1,14 @@
 import * as SignalR from '@microsoft/signalr';
 import Peer from 'peerjs';
 import styled from 'styled-components'
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import {v4 as uuidv4} from 'uuid';
 import DashBoard from '../UI/Containers/DashBoard';
+import Sidebar from "../UI/Components/SideBar";
+import BottomBar from "../UI/Components/BottomBar";
+import {Canvas, useFrame} from "react-three-fiber";
+import * as THREE from "three";
+import five from "../Assets/five.png";
 
 
 const StyledVideo = styled.video`
@@ -25,6 +30,7 @@ const Video = ({stream}) => {
         <StyledVideo playsInline autoPlay ref={ref}/>
     );
 }
+
 /*const [USERNAME, setUSERNAME] = useState("")
 const formData = window.localStorage.getItem("userInfo");
         const savedValues = JSON.parse(formData);
@@ -33,10 +39,13 @@ function WebRTCMain() {
 
     const hub = useRef();
     const myPeer = useRef();
-    const [videos, setVideos] = useState([null]);
+    const [videos, setVideos] = useState({
+        leader: null,
+        streams: []
+    });
     let ROOMID = "";
     let USERNAME = "";
-    
+
     const myVideoStream = useRef();
     //const myStreamObject = useRef();
     const peers = {};
@@ -45,9 +54,8 @@ function WebRTCMain() {
     const [messages, setMessages] = useState([]);
     const [userList, setUserlist] = useState({});
     const [message, changeMessage] = useState("");
-    
- 
-
+    const usedIDS = useRef([]);
+    const [randomID, setRandomID] = useState(uuidv4());
 
 
     useEffect(() => {
@@ -57,7 +65,7 @@ function WebRTCMain() {
         USERNAME = formData.username;
         ROOMID = formData.roomid;
 
-        
+
         if (USERNAME === "" || USERNAME === null || USERNAME === undefined) {
             USERNAME = uuidv4().slice(0, 5);
         }
@@ -126,8 +134,7 @@ function WebRTCMain() {
 
             myPeer.current.on('open', id => {
                 hub.current.invoke("JoinRoom", ROOMID, id, USERNAME);
-                if(USERNAME.includes('(Meeting Leader)'))
-                {
+                if (USERNAME.includes('(Meeting Leader)')) {
                     console.log("Setting leader");
                     hub.current.invoke("SetLeader", stream.id);
                 }
@@ -137,13 +144,25 @@ function WebRTCMain() {
     }, [])
 
     function addVideoStream(stream) {
-        if(stream.id === leader) {
-            const vids = videos;
-            vids[0] = stream;
-            setVideos(vids);
-        }else {
-            setVideos(vids => [...vids, stream])
+        console.log(leader)
+        console.log(stream.id)
+        if (stream.id === leader) {
+            if (usedIDS.current.indexOf(stream.id) > -1) return;
+            console.log('Adding stream Leader')
+            const newVideos = videos;
+            newVideos.leader = stream;
+            setVideos(newVideos);
+            usedIDS.current.push(stream.id)
+        } else {
+            if (usedIDS.current.indexOf(stream.id) > -1) return;
+            console.log('Adding non leader')
+            const newVideos = videos;
+            newVideos.streams = [...newVideos.streams, stream];
+            setVideos(newVideos);
+            usedIDS.current.push(stream.id)
         }
+
+        setRandomID(uuidv4());
 
     }
 
@@ -190,10 +209,10 @@ function WebRTCMain() {
 
         const usedID = [];
         const vids = [];
-        videos.forEach(stream => {
-            if(stream === null){
+        videos.streams.forEach(stream => {
+            if (stream === null) {
                 vids.push(null);
-            }else if (usedID.indexOf(stream.id) <= -1) {
+            } else if (usedID.indexOf(stream.id) <= -1) {
                 if (stream != undefined) {
                     usedID.push(stream.id);
                     vids.push(stream);
@@ -202,7 +221,13 @@ function WebRTCMain() {
             }
         });
 
-        return vids;
+        console.log('Removing dupes')
+        console.log(vids);
+
+        const ret = {leader: videos.leader, streams: vids};
+        console.log(ret);
+
+        return ret;
 
     }
 
@@ -217,11 +242,13 @@ function WebRTCMain() {
     }
 
 
-    return (<div>
+    /*return (<div>
+
             <DashBoard
+                key={videos.toString()}
                 users={userList}
                 messages={messages}
-                videoList={removeDupes()}
+                videoList={videos}
                 muteCallback={toggleAudio}
                 videoCallback={toggleVideo}
                 messageChangeCallback={handleChange}
@@ -231,12 +258,79 @@ function WebRTCMain() {
                 leaderID={leader}
             >
                 <UserVid muted autoPlay ref={myVideoStream}/>
+
             </DashBoard>
+
         </div>
-    );
+    );*/
+
+    const fixMyShit = () => {
+        const newVideos = {
+            leader: null,
+            streams: []
+        }
+        videos.streams.forEach((video) =>{
+            if(video.id === leader) {
+                console.log('The Shit');
+                newVideos.leader = video;
+            }else{
+                newVideos.streams.push(video)
+            }
+        })
+
+        setVideos(newVideos);
+    }
+
+    return (
+        <div>
+            <Sidebar users={userList} messages={messages} messageChangeCallback={handleChange}
+                     submitCallback={handleSubmit} currentMessage={message}/>
+            <Container ke={randomID}>
+                <Canvas>
+                    {
+                        videos.leader? <BigVideo position={[0,0, 1]} stream={videos.leader}/>: null
+                    }
+                    {
+                        videos.streams.map((stream, index) => {
+                            console.log(index);
+                            if(stream.id === leader)
+                            {
+                                fixMyShit();
+                            }
+                            var rotation;
+                            var pos;
+                            if (index % 2 == 0) {
+                                console.log("Hello")
+                                rotation = [0, -0.4, 0]
+                                if (index < 2)
+                                    pos = [1, 0, 3]
+                                else
+                                    pos = [1, 0, 2]
+                            } else {
+                                console.log("NOT HELLO")
+                                rotation = [0, 0.4, 0]
+                                if (index < 2)
+                                    pos = [-1, 0, 3]
+                                else
+                                    pos = [-1, 0, 2]
+                            }
+                            return <VideoBox key={index} stream={stream} position={pos} rotation={rotation}/>
+                        })
+                    }
+                    <Table position={[0, -0.5, 1.1]}/>
+                    <Floor position={[0, -1, 0]}/>
+                    <Wall position={[4, 0, 0]}/>
+                    <Wall position={[-4, 0, 0]}/>
+
+                    <Roof position={[0, 4, 0]}/>
+                    <BackWall position={[0, 0, -1]}/>
+                </Canvas>
+                <UserVid muted autoPlay ref={myVideoStream}/>
+            </Container>
+            <BottomBar mute={toggleAudio} video={toggleVideo}/>
+        </div>
+    )
 }
-
-
 
 
 export const UserVid = styled.video`
@@ -251,5 +345,130 @@ const UserVideoHidden = styled(UserVid)`
   display: none;
 `
 
+const Container = styled.div`
+  width: auto;
+  height: 85vh;
+  margin-right: 16rem;
+  position: relative;
+  //padding: 0 4rem;
+`
+const Box = (props) => {
+    const mesh = useRef();
+
+    const [active, setActive] = useState(false);
+
+    useFrame(() => {
+        mesh.current.rotation.x = mesh.current.rotation.y += 0.01;
+    });
+
+    const texture = useMemo(() => new THREE.TextureLoader().load(five), []);
+
+    return (
+        <mesh
+            {...props}
+            ref={mesh}
+            scale={active ? [2, 2, 2] : [1.5, 1.5, 1.5]}>
+            <boxBufferGeometry args={[1, 1, 1]}/>
+            <meshBasicMaterial attach="material" transparant side={THREE.DoubleSide}>
+                <primitive object={texture} attach="map"/>
+            </meshBasicMaterial>
+        </mesh>
+    );
+}
+
+const Table = (props) => {
+    return (
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[3, 0.0001, 8]}/>
+            <meshBasicMaterial color={0x964B00}/>
+        </mesh>)
+
+}
+
+const Floor = (props) => {
+    return (
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[10, 1, 100]}/>
+            <meshBasicMaterial color={0xa19255}/>
+        </mesh>)
+
+}
+
+const Wall = (props) => {
+    return (
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[1, 10, 100]}/>
+            <meshBasicMaterial color={0x918c74}/>
+        </mesh>)
+
+}
+const BackWall = (props) => {
+    return (
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[10, 10, 1]}/>
+            <meshBasicMaterial color={0x918c74}/>
+        </mesh>)
+
+}
+
+const Roof = (props) => {
+    return (
+        <mesh
+            {...props}>
+            <boxBufferGeometry args={[100, 1, 100]}/>
+            <meshBasicMaterial color={0xffffff}/>
+        </mesh>)
+
+}
+
+const VideoBox = (props) => {
+    const mesh = useRef();
+
+    const [video] = useState(() => {
+        const vid = document.createElement("video");
+        vid.srcObject = props.stream;
+        vid.autoplay = true;
+        return vid;
+    })
+    useEffect(() => void video.play(), [video])
+
+    return <mesh
+        ref={mesh}
+        {...props}
+        scale={[1, 1, 1]}
+    >
+        <planeBufferGeometry args={[1, 1, 1]}/>
+        <meshBasicMaterial>
+            <videoTexture args={[video]} attach="map"/>
+        </meshBasicMaterial>
+    </mesh>
+
+}
+
+const BigVideo = (props) => {
+    const [video] = useState(() => {
+        const vid = document.createElement("video");
+        vid.srcObject = props.stream;
+        vid.autoplay = true;
+        return vid;
+    })
+
+    useEffect(() => void video.play(), [video])
+
+    return <mesh
+        {...props}
+        scale={[3, 3, 1]}
+    >
+        <planeBufferGeometry args={[1, 1, 1]}/>
+        <meshBasicMaterial>
+            <videoTexture args={[video]} attach="map"/>
+        </meshBasicMaterial>
+    </mesh>
+
+}
 
 export default WebRTCMain;
