@@ -2,7 +2,8 @@ import ReactApp from './Home/ReactApp';
 import PlaceChoice from './Home/PlaceChoice';
 import {BrowserRouter, Route, Switch} from "react-router-dom"
 import WebRTCMain from './WebRTC/WebRTCMain';
-import Whiteboard from './Whiteboard/WhiteBoard';
+//import Whiteboard from './Whiteboard/WhiteBoard';
+import Board from "./WebRTC/board";
 import OfficeUi from './Home/OfficeUi';
 import HomeUi from './Home/HomeUi';
 import HomeOfficeHook from './Home/HomeOfficeHook';
@@ -25,7 +26,7 @@ function App() {
                         <Route exact path="/HomeUi" component={HomeUi}/>
                         <Route exact path="/WebRTC" component={WebRTCMain}/>
                         <Route exact path="/OfficeNonLeader" component={OfficeNonLeader}/>
-                        <Route exact path="/Whiteboard/:id" component={Whiteboard}/>
+                        <Route exact path="/Board/:id" component={Board}/>
                     </ThemeProvider>
                 </Switch>
             </div>
