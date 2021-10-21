@@ -11,6 +11,7 @@ import { Link } from "react-router-dom"
 
 
 
+
 const SectionLeft = styled.div`
     display: inherit;
     flex-shrink: 0;
@@ -53,7 +54,7 @@ const Container = styled.div`
 
 
 const BottomBar = ({mute, video}) => {
-
+    
     return (
         <Container>
             <SectionLeft>
@@ -62,6 +63,7 @@ const BottomBar = ({mute, video}) => {
             </SectionLeft>
             <SectionMid>
                 <WhiteboardIcon/>
+                
             </SectionMid>
             <SectionRight>
                     <ScreenShare/>
