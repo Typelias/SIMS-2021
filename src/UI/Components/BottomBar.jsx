@@ -55,15 +55,15 @@ const Container = styled.div`
 
 
 const BottomBar = ({mute, video}) => {
-
+    const path = window.location.pathname;
     return (
+        
         <Container>
             <SectionLeft>
-                <Microphone mute={mute}/>
-                <Camera video={video}/>
+                {path !== "/OfficeNonLeader" && <><Microphone mute={mute}/> <Camera video={video}/></> }  
             </SectionLeft>
             <SectionMid>
-                <OpenWhiteBoard/>
+                {path !== "/OfficeNonLeader" && <OpenWhiteBoard/> }   
             </SectionMid>
             <SectionRight>
                     <ScreenShare/>
