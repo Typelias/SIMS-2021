@@ -241,29 +241,6 @@ function WebRTCMain() {
         changeMessage("");
     }
 
-
-    /*return (<div>
-
-            <DashBoard
-                key={videos.toString()}
-                users={userList}
-                messages={messages}
-                videoList={videos}
-                muteCallback={toggleAudio}
-                videoCallback={toggleVideo}
-                messageChangeCallback={handleChange}
-                submitCallback={handleSubmit}
-                place="Home"
-                currentMessage={message}
-                leaderID={leader}
-            >
-                <UserVid muted autoPlay ref={myVideoStream}/>
-
-            </DashBoard>
-
-        </div>
-    );*/
-
     const fixMyShit = () => {
         const newVideos = {
             leader: null,
@@ -468,7 +445,6 @@ const BigVideo = (props) => {
             <videoTexture args={[video]} attach="map"/>
         </meshBasicMaterial>
     </mesh>
-
 }
 
 export default WebRTCMain;
