@@ -1,0 +1,158 @@
+#container {
+  position: relative;
+  width: 1400px;
+  height: 720px;
+  background-color: #fff;
+  border-radius: 5px;
+  margin: auto;
+}
+
+body {
+  background: rgb(55, 55, 55) !important;
+}
+#imageView {
+  border: 1px solid #000;
+}
+#imageTemp {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+canvas {
+  border-radius: 5px;
+}
+
+.pen {
+  cursor: url(./img/pen.png), crosshair;
+}
+
+.eraser {
+  cursor: url(./img/eraser.png), crosshair;
+}
+
+.color-value {
+  width: 19px;
+  height: 19px;
+  float: left;
+  display: block;
+}
+
+#text_tool {
+  position: absolute;
+  border: 1px dashed black;
+  outline: 0;
+  z-index: 1000 !important;
+  display: none;
+  overflow: hidden;
+}
+
+#textn_tool {
+  position: absolute;
+  border: 1px dashed black;
+  outline: 0;
+  z-index: 1000 !important;
+  display: none;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #06f;
+}
+
+.container .panel {
+  margin-left: auto;
+  margin-right: auto;
+  width: 1300px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.container .btn.btn-sm {
+  background: #0039a6;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #0039a6;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+.container .btn.btn-sm:hover {
+  background: #4a9ce4;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #0039a6;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+
+.container .btn.btn-cler {
+  background: #a60000;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #a60000;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+
+.container .btn.btn-cler:hover {
+  background: #ee4747;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #a60000;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+
+.container .btn.btn-sm:active {
+  background: #06f;
+}
+
+.container .btn.btn-cler:active {
+  background: rgb(255, 0, 34);
+}
+
+label {
+  color: #fff;
+}
+.form-group {
+  margin-left: 10px;
+}
+
+.spvlogo {
+  margin-left: 30 px;
+}
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1024px) {
+  #colorSelect {
+    width: 40%;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  #colorSelect {
+    margin-bottom: 5%;
+  }
+}
