@@ -1,6 +1,6 @@
 import ReactApp from './Home/ReactApp';
 import PlaceChoice from './Home/PlaceChoice';
-import { HashRouter, Route, Switch } from "react-router-dom"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 import WebRTCMain from './WebRTC/WebRTCMain';
 import Whiteboard from './Whiteboard/WhiteBoard';
 import OfficeUi from './Home/OfficeUi';
@@ -12,7 +12,7 @@ import {  darkTheme } from './UI/Styles/Theme'
 function App() {
 
   return (
-    <HashRouter>
+    <BrowserRouter>
         
       <div className="App">
           <Switch>
@@ -23,12 +23,12 @@ function App() {
               <Route exact path="/HomeOfficeHook" component={HomeOfficeHook}/>
               <Route exact path="/HomeUi" component={HomeUi}/>
               <Route exact path="/WebRTC" component={WebRTCMain} />
-              <Route exact path="/Whiteboard" component={Whiteboard} />
+              <Route exact path="/Whiteboard/:id" component={Whiteboard} />
             </ThemeProvider>
           </Switch>
       </div>
   
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
