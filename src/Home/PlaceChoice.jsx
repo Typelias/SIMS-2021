@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState} from 'react';
 import HomeOfficeHook from './HomeOfficeHook';
-
+import WindowPortal from '../UI/WindowPortal';
 
 
 
@@ -8,14 +8,21 @@ import HomeOfficeHook from './HomeOfficeHook';
 
 class PlaceChoice extends React.Component  {
 
-
+    
+        
+        
+        
 
     uName = this.props.location.state
     
     render() {
         
         return (
-            <HomeOfficeHook/>
+            <div>
+                <HomeOfficeHook/>
+                
+            </div>
+            
             
             
            
