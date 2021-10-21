@@ -85,7 +85,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 
-  var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5000/whiteboard").build();
+  var connection = new signalR.HubConnectionBuilder().withUrl("http://typelias.se:5000/whiteboard").build();
   var tools = {};
   var textarea;
   var textarean;

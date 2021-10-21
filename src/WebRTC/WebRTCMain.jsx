@@ -6,10 +6,11 @@ import {v4 as uuidv4} from 'uuid';
 import DashBoard from '../UI/Containers/DashBoard';
 import Sidebar from "../UI/Components/SideBar";
 import BottomBar from "../UI/Components/BottomBar";
-import {Canvas, useFrame} from "react-three-fiber";
+import {Canvas, useFrame, useLoader} from "react-three-fiber";
 import * as THREE from "three";
 import five from "../Assets/five.png";
-
+import concrete from "../Assets/concrete.jpg"
+import Woood from '../Assets/Wood.png'
 
 const StyledVideo = styled.video`
   height: 200px;
@@ -75,8 +76,7 @@ function WebRTCMain() {
         navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(async (stream) => {
 
             hub.current = new SignalR.HubConnectionBuilder()
-                /*.withUrl("http://192.168.1.8:5000/signalr")*/
-                .withUrl("http://localhost:5000/signalr")
+                .withUrl("http://typelias.se:5000/signalr")
                 .configureLogging(SignalR.LogLevel.Information)
                 .build();
             await hub.current.start();
@@ -87,7 +87,7 @@ function WebRTCMain() {
 
             myPeer.current = new Peer(myID.current, {
                 path: "/",
-                host: "localhost",
+                host: "typelias.se",
                 port: 5000
             });
 
@@ -296,12 +296,13 @@ function WebRTCMain() {
                         })
                     }
                     <Table position={[0, -0.5, 1.1]}/>
-                    <Floor position={[0, -1, 0]}/>
+                    <Floor position={[0, -1, 4]}/>
                     <Wall position={[4, 0, 0]}/>
                     <Wall position={[-4, 0, 0]}/>
 
                     <Roof position={[0, 4, 0]}/>
                     <BackWall position={[0, 0, -1]}/>
+
                 </Canvas>
                 <UserVid muted autoPlay ref={myVideoStream}/>
             </Container>
@@ -355,40 +356,64 @@ const Box = (props) => {
 }
 
 const Table = (props) => {
+
+    const texture = useMemo(() => new THREE.TextureLoader().load("https://threejsfundamentals.org/threejs/lessons/resources/images/compressed-but-large-wood-texture.jpg"), []);
+
     return (
         <mesh
             {...props}>
             <boxBufferGeometry args={[3, 0.0001, 8]}/>
-            <meshBasicMaterial color={0x964B00}/>
+            <meshBasicMaterial>
+                <primitive object={texture} attach="map"/>
+            </meshBasicMaterial>
         </mesh>)
 
 }
 
 const Floor = (props) => {
+    const texture = useMemo(() => new THREE.TextureLoader().load(Woood), []);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(512,512)
+    texture.anisotropy = 16;
+
     return (
         <mesh
             {...props}>
-            <boxBufferGeometry args={[10, 1, 100]}/>
-            <meshBasicMaterial color={0xa19255}/>
+            <boxBufferGeometry args={[10, 1, 10]}/>
+            <meshBasicMaterial attach="material" transparant side={THREE.DoubleSide}>
+                <primitive object={texture} attach="map"/>
+            </meshBasicMaterial>
         </mesh>)
 
 }
 
 const Wall = (props) => {
+    const texture = useMemo(() => new THREE.TextureLoader().load(concrete), []);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(512,256)
+    texture.anisotropy = 16;
     return (
         <mesh
             {...props}>
             <boxBufferGeometry args={[1, 10, 100]}/>
-            <meshBasicMaterial color={0x918c74}/>
+            <meshBasicMaterial>
+                <primitive object={texture} attach="map"/>
+            </meshBasicMaterial>
         </mesh>)
 
 }
 const BackWall = (props) => {
+    const texture = useMemo(() => new THREE.TextureLoader().load(concrete), []);
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(512,256)
+    texture.anisotropy = 16;
     return (
         <mesh
             {...props}>
             <boxBufferGeometry args={[10, 10, 1]}/>
-            <meshBasicMaterial color={0x918c74}/>
+            <meshBasicMaterial>
+                <primitive object={texture} attach="map"/>
+            </meshBasicMaterial>
         </mesh>)
 
 }
