@@ -38,7 +38,7 @@ export default class OpenWhiteBoard extends React.Component {
         this.setState(() => ({
           
         }));
-      }, 1000);
+      }, 10);
       
     }
     
