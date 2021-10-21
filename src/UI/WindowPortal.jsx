@@ -6,7 +6,8 @@ class WindowPortal extends React.Component {
       
       containerEl = null;
       externalWindow = null;
-    
+      
+
   
     componentDidMount() {
       

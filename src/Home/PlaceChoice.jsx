@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import HomeOfficeHook from './HomeOfficeHook';
 import WindowPortal from '../UI/WindowPortal';
 
@@ -12,7 +12,6 @@ class PlaceChoice extends React.Component  {
         
         
         state = {
-          counter: 0,
           showWindowPortal: false,
         };
         
@@ -25,10 +24,11 @@ class PlaceChoice extends React.Component  {
         });
         
         window.setInterval(() => {
-          this.setState(state => ({
-            counter: state.counter + 1
+          this.setState(() => ({
+            
           }));
         }, 1000);
+        
       }
       
       toggleWindowPortal() {
@@ -54,9 +54,8 @@ class PlaceChoice extends React.Component  {
                 </button>
                 {this.state.showWindowPortal && (
                     <WindowPortal closeWindowPortal={this.closeWindowPortal} >
-                      <h1>Counter in a portal: {this.state.counter}</h1>
+                      <h1>Counter in a portal: </h1>
                       <p>Even though I render in a different window, I share state!</p>
-
                       <button onClick={() => this.closeWindowPortal()} >
                         Close me!
                       </button>
