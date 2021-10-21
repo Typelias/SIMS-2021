@@ -15,7 +15,6 @@ function SignInHook() {
     const [roomid, setRoomid] = useState("");
     
     let tmp = "";
-    let newTmp = "";
     function validateEntry() {
       return username.length > 0 && roomid.length > 0;
     }
@@ -47,11 +46,9 @@ function SignInHook() {
       setRoomid(savedValues.roomid);
     }, []);
 
-    setRoomidString = (e) => {
-      tmp = e.target.value;
-      newTmp = tmp.replace(/ /g, "_");
-      console.log(newTmp + "\n" + tmp);
-      setRoomid(newTmp);
+    function setRoomidString(value) {
+      tmp = value.replace(/ /g, "_");
+      setRoomid(tmp);
     }
     return (
         <Card sx={{width: "25%", bgcolor: "lightGray", height: "50%", margin: "0 auto", marginTop: "5%"}}>
@@ -73,7 +70,7 @@ function SignInHook() {
                 color='secondary'
                 label="Room ID" 
                 value={roomid}
-                onChange={e => setRoomidString()}
+                onChange={e => setRoomidString(e.target.value)}
                 variant="outlined">
                 </TextField>
         </CardContent>
