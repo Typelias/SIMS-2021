@@ -56,6 +56,13 @@ function HookTest() {
     }
 
     function goToOfficeAsLeader(){
+        let formData = window.localStorage.getItem('userInfo');
+        if(!formData) {
+            history.push("/");
+        }
+        formData = JSON.parse(formData);
+        formData.username += '(Meeting Leader)'
+        window.localStorage.setItem('userInfo', JSON.stringify(formData));
         history.push({
             pathname: "/OfficeUi",
             state: "Meeting Leader",

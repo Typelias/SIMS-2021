@@ -35,6 +35,7 @@ function SignInHook() {
 
     useEffect(() => {
       const formData = window.localStorage.getItem("userInfo");
+      if(!formData) return;
       const savedValues = JSON.parse(formData);
       setUsername(savedValues.username);
       setRoomid(savedValues.roomid);
