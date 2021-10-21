@@ -83,6 +83,8 @@ function HookTest() {
     font-size: 24;
     font-weight: bold;
     margin-top: -10%;
+    margin-left: -50%;
+    margin-right:-50%;
     text-align: center;
     color: black;
     
@@ -103,7 +105,7 @@ function HookTest() {
                 <CenterRipple>
                     <PaperStyle elevation={5} onClick={pickOfficeMode}><BusinessRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><TypographyStyle>Office</TypographyStyle></PaperStyle>
                 </CenterRipple>   
-                <Box sx={{ position: 'absolute', display: 'flex', alignItems: "left", justifyContent: "left",  marginLeft: '-20%', marginTop: '20%'}}>
+                <Box sx={{ position: 'absolute', display: 'flex', alignItems: "left", justifyContent: "left",  marginLeft: '-20%', marginTop: '25%'}}>
                     <Grow sx={{ width: '25vh', height: '12vh' }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsLeader} ><IconStyle icon="si-glyph:person-people" /><TypographyStyleTwo>Meeting Leader</TypographyStyleTwo></SmallPaper></Grow>
                     <Grow sx={{ width: '25vh', height: '12vh' }} in={checked}><SmallPaper elevation={5} onClick={goToOfficeAsParticipant}><IconStyle icon="fluent:people-community-24-filled" /><TypographyStyleTwo>Participant</TypographyStyleTwo></SmallPaper></Grow>
                 </Box>
