@@ -1,10 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Icon } from '@iconify/react'; //whiteboard icon
 
-const Style = {
-    fontSize: 48
-}
+
 const Container = styled.div`
     color: ${({ theme }) => theme.textColor};
     cursor: pointer;
@@ -19,12 +17,14 @@ const Container = styled.div`
 
 const WhiteboardIcon = () => {
     
+    const [CurrIcon, setCurrIcon] = useState(false);
+
     function whiteboardClick(){
-        console.log("you clicked whiteboard icon");
+        setCurrIcon(!CurrIcon);
     }
     return (
         <Container onClick={whiteboardClick}>
-            <Icon icon="fluent:whiteboard-20-regular" style={Style}/>
+            <Icon icon={CurrIcon ? "fluent:whiteboard-20-regular" : "fluent:whiteboard-20-filled"} style={{fontSize: 48}}/>
         </Container>
     )
 }

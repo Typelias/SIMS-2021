@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Microphone from './BottomBarIcons/Microphone'; 
 import Camera from './BottomBarIcons/Camera';   
-import WhiteboardIcon from './BottomBarIcons/WhiteboardIcon'; 
+import OpenWhiteBoard from './OpenWhiteBoard'; 
 import Settings from './BottomBarIcons/Settings'; //settingsicon
 import ScreenShare from './BottomBarIcons/ScreenShare'; //screenshare icon
 import Home from './BottomBarIcons/Home';
@@ -62,8 +62,7 @@ const BottomBar = ({mute, video}) => {
                 <Camera video={video}/>
             </SectionLeft>
             <SectionMid>
-                <WhiteboardIcon/>
-                
+                <OpenWhiteBoard/>
             </SectionMid>
             <SectionRight>
                     <ScreenShare/>

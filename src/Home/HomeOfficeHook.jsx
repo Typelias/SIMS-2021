@@ -5,7 +5,7 @@ import { Box, Typography, Paper} from "@mui/material";
 import CenterRipple from '@mui/material/ButtonBase'
 import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
 import HomeWorkRoundedIcon from '@mui/icons-material/HomeWorkRounded';
-import OpenWhiteBoard from './OpenWhiteBoard'
+
 
 
 function HookTest() {
@@ -60,7 +60,6 @@ function HookTest() {
                 <CenterRipple> 
                     <PaperStyle elevation={5} onClick={goToHome}><HomeWorkRoundedIcon sx={{ fontSize: 70, marginTop: '5%' }}/><TypographyStyle>Home</TypographyStyle></PaperStyle>
                 </CenterRipple>    
-                <OpenWhiteBoard/>
         </Box>
         
     )
