@@ -741,9 +741,11 @@ tools.text = function () {
  
  textarean = document.createElement('textarea');
  textarean.id = 'textn_tool';
- textarean.autofocus = true;
  init().appendChild(textarean);
- 
+
+ setTimeout(function() {
+  $('#textn_tool').autofocus();
+}, 0);
  
  // Note tool's text container for calculating lines/chars
  var tmp_txt_ctnn = document.createElement('div');
@@ -752,6 +754,11 @@ tools.text = function () {
  init().appendChild(tmp_txt_ctnn);
  
  function DrawNote(fsize, ffamily, colorVal, textPosLeft, textPosTop, processed_lines, emit){
+
+
+         context.fillStyle = "red";
+         context.fillRect(100, 111, 200, 200);
+
          context.font = fsize + ' ' + ffamily;
          context.textBaseline = 'top';
          context.fillStyle = "#"+colorVal;
@@ -767,6 +774,8 @@ tools.text = function () {
          }
          
          img_update(); //Already emitting no need true param
+
+
          
          if (!emit) { return; }
  
@@ -819,10 +828,11 @@ tools.text = function () {
          textarean.style.height = height + 'px';
          
          textarean.style.whiteSpace  = 'pre';
-         textarean.style.background = '#FF3527';
+  
         
          textarean.style.display = 'block';
          textarean.style.color = "#"+colorPicked;
+         textarean.style.border = "solid";
 
        }; 
  
@@ -864,6 +874,7 @@ tools.text = function () {
               
                  var fs = "16px";
                  var ff = SelectedFontFamily; 
+                
 
                  DrawNote(fs, ff, colorPicked, textarean.style.left, textarean.style.top, processed_lines, true)
                  textarean.style.display = 'none';
