@@ -18,8 +18,7 @@ class WindowPortal extends React.Component {
       // See: https://github.com/rmariuzzo/react-new-window/issues/12#issuecomment-386992550
       let formData = window.localStorage.getItem("userInfo");
       formData = JSON.parse(formData);
-      let room = formData.roomid;
-      console.log(room);
+      let room = formData.roomid; 
       this.externalWindow = window.open('http://localhost:3000/Whiteboard/:' + room, '', 'width=1400,height=800,left=100,top=100');
       this.containerEl = this.externalWindow.document.createElement('div');
       this.externalWindow.document.body.appendChild(this.containerEl);
