@@ -280,14 +280,14 @@ function WebRTCMain() {
                                 console.log("Hello")
                                 rotation = [0, -0.4, 0]
                                 if (index < 2)
-                                    pos = [1, 0, 3]
+                                    pos = [2.5, 0, 3]
                                 else
                                     pos = [1, 0, 2]
                             } else {
                                 console.log("NOT HELLO")
                                 rotation = [0, 0.4, 0]
                                 if (index < 2)
-                                    pos = [-1, 0, 3]
+                                    pos = [-2.5, 0, 3]
                                 else
                                     pos = [-1, 0, 2]
                             }
