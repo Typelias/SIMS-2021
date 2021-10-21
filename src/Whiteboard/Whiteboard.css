@@ -23,11 +23,18 @@ canvas {
 }
 
 .pen {
-  cursor: url(../img/pen.png), crosshair;
+  cursor: url(./img/pen.png), crosshair;
 }
 
 .eraser {
-  cursor: url(../img/eraser.png), crosshair;
+  cursor: url(./img/eraser.png), crosshair;
+}
+
+.color-value {
+  width: 19px;
+  height: 19px;
+  float: left;
+  display: block;
 }
 
 #text_tool {
@@ -72,6 +79,20 @@ canvas {
   padding: 5px 15px;
   margin-right: 5px;
 }
+.container .btn.btn-sm:hover {
+  background: #4a9ce4;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #0039a6;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
 
 .container .btn.btn-cler {
   background: #a60000;
@@ -87,6 +108,22 @@ canvas {
   padding: 5px 15px;
   margin-right: 5px;
 }
+
+.container .btn.btn-cler:hover {
+  background: #ee4747;
+  box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  text-shadow: 0 1px #a60000;
+  display: inline-block;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-right: 5px;
+}
+
 .container .btn.btn-sm:active {
   background: #06f;
 }
@@ -98,6 +135,14 @@ canvas {
 label {
   color: #fff;
 }
+.form-group {
+  margin-left: 10px;
+}
+
+.spvlogo {
+  margin-left: 30 px;
+}
+
 /* MEDIA QUERIES */
 
 @media screen and (max-width: 1024px) {

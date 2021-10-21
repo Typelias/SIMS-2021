@@ -1,33 +1,41 @@
-'use strict';
+import $ from 'jquery';
+import * as signalR from '@microsoft/signalr';
 
-(function() {
 
-  var socket = io();
+
+function Canvas() {
+
+  var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5000/whiteboard").build();
   var tools = {};
   var textarea;
   var textarean;
   var colorPicked;
   var lineWidthPicked;
   var SelectedFontFamily;
-  var SelectedFontSize;
-  
-  
-// Keep everything in anonymous function, called on window load
 
-  if(window.addEventListener) {
-  window.addEventListener('load', function () {
+
   var canvas, context, canvaso, contexto;
+  document.getElementById("pencil-button").disabled = true;
 
   // The active tool instance
   var tool;
   var tool_default = 'pencil';
 
+  connection.start().then(function () {
+      document.getElementById("pencil-button").disabled = false;
+      connection.invoke('JoinRoom','1111');
+  }).catch(function (err) {
+      return console.error(err.toString());
+  });
+
+
   function init () {
 
     // Find the canvas element
     canvaso = document.getElementById('imageView');
+    
     if (!canvaso) {
-      alert('Error: cannot find the canvas element!');
+      alert('Error: no canvas.getContext!');
       return;
     }
 
@@ -81,19 +89,12 @@
         SelectedFontFamily = $("#draw-text-font-family").val();
     })
     
-    // SelectedFontSize
-    SelectedFontSize = $("#draw-text-font-size").val();
-    
-    $("#draw-text-font-family").change(function(){
-        SelectedFontSize = $("#draw-text-font-size").val();
-    })
-    
 
     // Activate the default tool
     if (tools[tool_default]) {
-      tool = new tools[tool_default]();
-      tool_select.value = tool_default;
-    }
+        tool = new tools[tool_default]();
+        tool_select.value = tool_default;
+      }
     
     function pic_tool_click(pick){
         if (tools[pick.value]) {
@@ -135,6 +136,8 @@
     canvas.addEventListener('mousedown', ev_canvas, false);
     canvas.addEventListener('mousemove', ev_canvas, false);
     canvas.addEventListener('mouseup',   ev_canvas, false);
+
+    return container;
   }
 
     // The general-purpose event handler
@@ -142,10 +145,10 @@
   function ev_canvas (ev) {
       var CanvPos = canvas.getBoundingClientRect();  //Global Fix cursor position bug
 
-    if (ev.clientX || ev.clientX == 0) { 
+    if (ev.clientX || ev.clientX === 0) { 
       ev._x = ev.clientX - CanvPos.left;
       ev._y = ev.clientY - CanvPos.top;
-    } else if (ev.offsetX || ev.offsetX == 0) { 
+    } else if (ev.offsetX || ev.offsetX === 0) { 
     }
     
     // Call the event handler of the tool
@@ -164,16 +167,15 @@
 		context.clearRect(0, 0, canvas.width, canvas.height);
 
         if (!trans) return; 
-        socket.emit('copyCanvas', {
-          transferCanvas: true
-        });
+        connection.invoke('CopyCanvas', JSON.stringify({
+          transferCanvas: true}));
   }
   
   function onCanvasTransfer(data){
             img_update();
     }
   
-  socket.on('copyCanvas', onCanvasTransfer);
+  connection.on('CopyCanvas', onCanvasTransfer);
 
   
 
@@ -196,25 +198,24 @@
           if (!emit) { return; }
           var w = canvaso.width;
           var h = canvaso.height;
-
-          socket.emit('drawing', {
-            x0: x0 / w,
+          
+          connection.invoke('Drawing', JSON.stringify({x0: x0 / w,
             y0: y0 / h,
             x1: x1 / w,
             y1: y1 / h,
             color: colorPicked,
-            lineThickness: lineWidthPicked
-          });
+            lineThickness: lineWidthPicked}));
       }
       
       function onDrawingEvent(data){
+        console.log("hello");
+        data = JSON.parse(data);
           var w = canvaso.width;
           var h = canvaso.height;
           drawPencil(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, data.lineThickness);
       }
       
-      socket.on('drawing', onDrawingEvent);
-    
+     connection.on('Drawing', onDrawingEvent);
     
       tools.pencil = function () {
 
@@ -275,25 +276,27 @@
             var w = canvaso.width;
             var h = canvaso.height;
 
-            socket.emit('rectangle', {
+            connection.invoke('Rectangle', JSON.stringify({
               min_x: min_x / w,
               min_y: min_y / h,
               abs_x: abs_x / w,
               abs_y: abs_y / h,
               color: colorPicked,
               lineThickness: lineWidthPicked
-            });
+            }));
+
+           
         
     }
     
     function onDrawRect(data){
+        data = JSON.parse(data);
         var w = canvaso.width;
         var h = canvaso.height;
-        console.log("IN")
         drawRect(data.min_x * w, data.min_y * h, data.abs_x * w, data.abs_y * h, data.color, data.lineThickness);
     }
     
-    socket.on('rectangle', onDrawRect);
+   connection.on('Rectangle', onDrawRect);
 
 
   // The rectangle tool
@@ -374,29 +377,30 @@
           var w = canvaso.width;
           var h = canvaso.height;
 
-          socket.emit('linedraw', {
-              x0: x0 / w,
-              y0: y0 / h,
-              x1: x1 / w,
-              y1: y1 / h,
-              color: colorPicked,
-              lineThickness: lineWidthPicked
-            });
+          connection.invoke('LineDraw', JSON.stringify({
+            x0: x0 / w,
+            y0: y0 / h,
+            x1: x1 / w,
+            y1: y1 / h,
+            color: colorPicked,
+            lineThickness: lineWidthPicked
+          }));
         
     }
     
     function onDrawLines(data){
-
-        var w = canvaso.width;
+        
+      data = JSON.parse(data);
+        var w = canvaso.width;  
         var h = canvaso.height;
         drawLines(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, data.lineThickness);
 
     }
     
-    socket.on('linedraw', onDrawLines);
+    connection.on('Linedraw', onDrawLines);
 
 
-    tools.line = function () {
+      tools.line = function () {
         var tool = this;
         this.started = false;
         textarea.style.display = "none";
@@ -442,23 +446,25 @@
     var w = canvaso.width;
     var h = canvaso.height;
 
-    socket.emit('eraser', {
+    connection.invoke('Eraser', JSON.stringify({
       x0: x0 / w,
       y0: y0 / h,
       x1: x1 / w,
       y1: y1 / h,
-      /**color: "#ff",
-      lineThickness: "40"**/
-    });
+      color: "#ff",
+      lineThickness: "40"
+    }));
 }
 
 function onEraserEvent(data){
+    data = JSON.parse(data);
     var w = canvaso.width;
     var h = canvaso.height;
     drawEraser(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h);
 }
 
-socket.on('eraser', onEraserEvent);
+connection.on('Eraser', onEraserEvent);
+
 
 
 tools.eraser = function () {
@@ -504,11 +510,11 @@ tools.eraser = function () {
     var ox, oy, xe, ye, xm, ym;
     var kappa = .5522848;
 
-      ox = (w / 2) * kappa, // control point offset horizontal
-      oy = (h / 2) * kappa, // control point offset vertical
-      xe = x + w,           // x-end
-      ye = y + h,           // y-end
-      xm = x + w / 2,       // x-middle
+      ox = (w / 2) * kappa; // control point offset horizontal
+      oy = (h / 2) * kappa; // control point offset vertical
+      xe = x + w;           // x-end
+      ye = y + h;           // y-end
+      xm = x + w / 2;       // x-middle
       ym = y + h / 2;       // y-middle
  
       context.beginPath();
@@ -530,25 +536,26 @@ tools.eraser = function () {
             context.stroke();
         
             
-            if (!emit) { return; }
+          if (!emit) { return; }
 
-            socket.emit('ellipsedraw', {
+          connection.invoke('Ellipsedraw', JSON.stringify({
               x: x,
               y: y,
               w: w,
               h: h,
               color: colorPicked,
               lineThickness: lineWidthPicked
-            });
+            }));
     
   }
   
     
     function onDrawEllipse(data){
+        data = JSON.parse(data);
         drawEllipse(data.x, data.y, data.w, data.h, data.color, data.lineThickness);
     }
     
-    socket.on('ellipsedraw', onDrawEllipse);
+    connection.on('Ellipsedraw', onDrawEllipse);
 
     tools.ellipse = function () {
       var tool = this;
@@ -596,13 +603,13 @@ tools.eraser = function () {
 textarea = document.createElement('textarea');
 textarea.id = 'text_tool';
 textarea.autofocus = true;
-container.appendChild(textarea);
+init().appendChild(textarea);
 
 
 // Text tool's text container for calculating lines/chars
 var tmp_txt_ctn = document.createElement('div');
 tmp_txt_ctn.style.display = 'none';
-container.appendChild(tmp_txt_ctn);
+init().appendChild(tmp_txt_ctn);
 
 function DrawText(fsize, ffamily, colorVal, textPosLeft, textPosTop, processed_lines, emit){
         context.font = fsize + ' ' + ffamily;
@@ -623,23 +630,23 @@ function DrawText(fsize, ffamily, colorVal, textPosLeft, textPosTop, processed_l
         
         if (!emit) { return; }
 
-            socket.emit('textdraw', {
+        connection.invoke('Textdraw', JSON.stringify({
               fsize: fsize,
               ffamily: ffamily,
               colorVal: colorVal,
               textPosLeft: textPosLeft,
               textPosTop: textPosTop,
               processed_linesArray: processed_lines 
-            });
+            }));
       
 }
 
  function onTextDraw(data){
-      
+        data = JSON.parse(data);
         DrawText(data.fsize, data.ffamily, data.colorVal, data.textPosLeft, data.textPosTop, data.processed_linesArray);
     }
     
-    socket.on('textdraw', onTextDraw);
+    connection.on('Textdraw', onTextDraw);
     
 
 
@@ -712,7 +719,7 @@ tools.text = function () {
                     tmp_txt_ctn.innerHTML = '';
                 }
              
-                var fs = SelectedFontSize;
+                var fs = "16px";
                 var ff = SelectedFontFamily; 
                 
                 DrawText(fs, ff, colorPicked, textarea.style.left, textarea.style.top, processed_lines, true)
@@ -728,21 +735,21 @@ tools.text = function () {
     
   };
   
-  //Text tool end
+//Text tool end
 
  //Note Tool start
  
  textarean = document.createElement('textarea');
  textarean.id = 'textn_tool';
  textarean.autofocus = true;
- container.appendChild(textarean);
+ init().appendChild(textarean);
  
  
  // Note tool's text container for calculating lines/chars
  var tmp_txt_ctnn = document.createElement('div');
  tmp_txt_ctnn.style.display = 'none';
 
- container.appendChild(tmp_txt_ctnn);
+ init().appendChild(tmp_txt_ctnn);
  
  function DrawNote(fsize, ffamily, colorVal, textPosLeft, textPosTop, processed_lines, emit){
          context.font = fsize + ' ' + ffamily;
@@ -763,23 +770,23 @@ tools.text = function () {
          
          if (!emit) { return; }
  
-             socket.emit('textdraw', {
+         connection.invoke('Notedraw', JSON.stringify({
                fsize: fsize,
                ffamily: ffamily,
                colorVal: colorVal,
                textPosLeft: textPosLeft,
                textPosTop: textPosTop,
                processed_linesArray: processed_lines 
-             });
+             }));
        
  }
  
   function onNoteDraw(data){
-       
+         data = JSON.parse(data);
          DrawNote(data.fsize, data.ffamily, data.colorVal, data.textPosLeft, data.textPosTop, data.processed_linesArray);
      }
      
-     socket.on('textdraw', onNoteDraw);
+     connection.on('Notedraw', onNoteDraw);
      
  
  
@@ -812,6 +819,7 @@ tools.text = function () {
          textarean.style.height = height + 'px';
          
          textarean.style.whiteSpace  = 'pre';
+         textarean.style.background = '#FF3527';
         
          textarean.style.display = 'block';
          textarean.style.color = "#"+colorPicked;
@@ -854,7 +862,7 @@ tools.text = function () {
                      tmp_txt_ctnn.innerHTML = '';
                  }
               
-                 var fs = SelectedFontSize;
+                 var fs = "16px";
                  var ff = SelectedFontFamily; 
 
                  DrawNote(fs, ff, colorPicked, textarean.style.left, textarean.style.top, processed_lines, true)
@@ -879,14 +887,15 @@ function clearAll_update(trans) {
       
     if (!trans) return; 
 
-    socket.emit('Clearboard', {CleardrawingBoard: true});
+    connection.invoke('Clearboard', JSON.stringify({CleardrawingBoard: true}));
   }
   
 function onClearAll(data){
-            clearAll_update();
+      data = JSON.parse(data); 
+      clearAll_update();
     }
   
-socket.on('Clearboard', onClearAll);
+connection.on('Clearboard', onClearAll);
 
 $("#clear-all").click(function(){
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -897,8 +906,6 @@ $("#clear-all").click(function(){
 
 init();
   
-}, false); }
+}
 
-})();
-
-
+export default Canvas;
