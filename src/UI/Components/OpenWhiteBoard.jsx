@@ -1,7 +1,8 @@
 import React from 'react'
 import WindowPortal from '../WindowPortal';
 import styled from 'styled-components'
-import { Icon } from '@iconify/react'; //whiteboard icon
+import { Icon } from '@iconify/react';
+import Whiteboard from "../../Whiteboard/WhiteBoard"; //whiteboard icon
 
 
 const Container = styled.div`
@@ -61,11 +62,7 @@ export default class OpenWhiteBoard extends React.Component {
               <Icon onClick={this.toggleWindowPortal} icon={"fluent:whiteboard-20-regular"} style={{fontSize: 48}}/> 
                 {this.state.showWindowPortal && (
                     <WindowPortal closeWindowPortal={this.closeWindowPortal} >
-                      <h1>Counter in a portal: </h1>
-                      <p>Even though I render in a different window, I share state!</p>
-                      <button onClick={() => this.closeWindowPortal()} >
-                        Close me!
-                      </button>
+                      <Whiteboard/>
                     </WindowPortal>
                 )}
             </Container>

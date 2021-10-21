@@ -2,9 +2,16 @@ import './Whiteboard.css';
 import $  from 'jquery';
 import React from 'react';
 import * as signalR from '@microsoft/signalr';
+import {useParams} from "react-router-dom";
 
 
 function Whiteboard() {
+
+    let {id} = useParams();
+    console.log(id);
+    if(!id){
+        id =JSON.parse(window.localStorage.getItem('userInfo')).roomid;
+    }
 
 // Link
 $(document).ready(function(){
@@ -96,7 +103,7 @@ $(document).ready(function(){
 
   connection.start().then(function () {
       document.getElementById("pencil-button").disabled = false;
-      connection.invoke('JoinRoom','1111');
+      connection.invoke('JoinRoom',id);
   }).catch(function (err) {
       return console.error(err.toString());
   });
