@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import WindowPortal from '../WindowPortal';
 import styled from 'styled-components'
 import { Icon } from '@iconify/react'; //whiteboard icon
@@ -22,17 +22,12 @@ const Container = styled.div`
 export default class OpenWhiteBoard extends React.Component {
 
     state = {
-        CurrIcon: false,
         showWindowPortal: false,
       };
       
       toggleWindowPortal = this.toggleWindowPortal.bind(this);
       closeWindowPortal = this.closeWindowPortal.bind(this);
-    whiteboardClick(){
-      this.setState(state => ({
-        CurrIcon: !state.CurrIcon,
-      }));
-    }
+      
     componentDidMount() {
       window.addEventListener('beforeunload', () => {
         this.closeWindowPortal();
@@ -47,21 +42,23 @@ export default class OpenWhiteBoard extends React.Component {
     }
     
     toggleWindowPortal() {
+
       this.setState(state => ({
         ...state,
         showWindowPortal: !state.showWindowPortal,
+        
       }));
     }
     
     closeWindowPortal() {
       this.setState({ showWindowPortal: false })
+      
     }
 
     render() {
         return (
-            <Container onClick={this.toggleWindowPortal, this.whiteboardClick}>
-                <Icon icon={this.CurrIcon ? "fluent:whiteboard-20-regular" : "fluent:whiteboard-20-filled"} style={{fontSize: 48}}/>
-
+            <Container>
+              <Icon onClick={this.toggleWindowPortal} icon={"fluent:whiteboard-20-regular"} style={{fontSize: 48}}/> 
                 {this.state.showWindowPortal && (
                     <WindowPortal closeWindowPortal={this.closeWindowPortal} >
                       <h1>Counter in a portal: </h1>
