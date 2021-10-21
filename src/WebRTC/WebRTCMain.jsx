@@ -108,6 +108,7 @@ function WebRTCMain() {
 
             hub.current.on('UserConnected', (userId, username) => {
                 if (userId === myID.current) return;
+                if(userId === "NoCameraUser") return;
                 connectToNewUser(userId, stream);
             })
             hub.current.on("UserDisconnected", userId => {

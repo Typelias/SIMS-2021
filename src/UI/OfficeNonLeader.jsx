@@ -12,12 +12,53 @@ const OfficeNonLeader = () => {
     const [messages, setMessages] = useState([]);
     const [message, changeMessage] = useState("");
     const [userList, setUserlist] = useState({});
+    let ROOMID = "";
+    let USERNAME = "";
+
+
+    const init = async () => {
+        await hub.current.start()
+        hub.current.invoke("JoinRoom", ROOMID, "NoCameraUser", USERNAME);
+
+    }
 
     useEffect(()=> {
+        let formData = window.localStorage.getItem("userInfo");
+        formData = JSON.parse(formData);
+        USERNAME = formData.username;
+        ROOMID = formData.roomid;
         hub.current = new SignalR.HubConnectionBuilder()
             .withUrl("http://localhost:5000/signalr")
             .configureLogging(SignalR.LogLevel.Information)
             .build();
+
+        hub.current.on('UserConnected', (userId, username) => {
+            return;
+        })
+        hub.current.on("UserDisconnected", userId => {
+            return;
+        });
+
+        hub.current.on("UserList", newUserList => {
+            // console.log(newUserList);
+            setUserlist(newUserList);
+        });
+
+        hub.current.on("NewLeader", streamID => {
+            return;
+        })
+
+        hub.current.on("createMessage", (message, username) => {
+            var newMessage = {
+                username,
+                message
+            };
+            setMessages(mess => [...mess, newMessage])
+        })
+
+        init();
+
+
 
     },[]);
 
