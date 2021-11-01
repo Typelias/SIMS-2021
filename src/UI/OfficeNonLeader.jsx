@@ -90,8 +90,8 @@ const OfficeNonLeader = () => {
 }
 
 const Container = styled.div`
-  width: auto;
-  height: 85vh;
+  width: fit-content;
+  height: fit-content;
   margin-right: 16rem;
   position: relative;
   //padding: 0 4rem;

@@ -8,6 +8,7 @@ const Container = styled.div`
     top: 0;
     bottom: 5rem;
     width: 16rem;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
